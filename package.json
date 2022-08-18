@@ -1,8 +1,8 @@
 {
-  "name": "OdorizziTrattori",
+  "name": "NicolaMorandi",
   "version": "0.0.1",
   "author": "Morandizzi's Family",
-  "homepage": "odorizzitrattori.morandizzi.freeddns.org",
+  "homepage": "nicolamorandi.morandizzi.freeddns.org",
   "scripts": {
     "setup": "cd backend && pip install pre-commit && pre-commit run --all-files",
     "dev-start-docker": "docker-compose --project-name nicolamorandi -f docker/docker-compose.dev.yml up -d",
