@@ -1,0 +1,69 @@
+version: '3'
+services:
+  frontend:
+    image: ${PROD_FRONTEND_IMAGE}
+    restart: unless-stopped
+    labels:
+      # Frontend
+      - "traefik.enable=true"
+      - "traefik.http.routers.nicolamorandi.rule=Host(`nicolamorandi.morandizzi.freeddns.org`)"
+      - "traefik.http.routers.nicolamorandi.entrypoints=websecure"
+      - "traefik.http.routers.nicolamorandi.tls=true"
+      - "traefik.http.routers.nicolamorandi.service=nicolamorandi"
+      - "traefik.http.services.nicolamorandi.loadbalancer.server.port=80"
+      - "traefik.http.routers.nicolamorandi.tls.certresolver=le"
+      - "traefik.http.routers.nicolamorandi.tls.domains[0].main=nicolamorandi.morandizzi.freeddns.org"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.nicolamorandi.middlewares=redirect-to-https@docker"
+
+  backend:
+    image: ${PROD_BACKEND_IMAGE}
+    restart: unless-stopped
+    environment:
+      - CORS_ALLOWED_ORIGINS=https://nicolamorandi.morandizzi.freeddns.org
+      - HOST=nicolamorandi-backend.morandizzi.freeddns.org
+      - DATABASE_URL=psql://nicolamorandi:${DATABASE_PASSWORD}@db/nicolamorandi
+      - SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DEBUG=False
+    depends_on:
+      - db
+    volumes:
+      - backend_media:/usr/src/app/media
+      - backend_static:/usr/src/app/static
+      - backend_logs:/usr/src/app/logs
+    user:
+      www-data:www-data
+    labels:
+      # Backend
+      - "traefik.enable=true"
+      - "traefik.http.routers.nicolamorandi-backend.rule=Host(`nicolamorandi-backend.morandizzi.freeddns.org`)"
+      - "traefik.http.routers.nicolamorandi-backend.entrypoints=websecure"
+      - "traefik.http.routers.nicolamorandi-backend.tls=true"
+      - "traefik.http.routers.nicolamorandi-backend.service=nicolamorandi-backend"
+      - "traefik.http.services.nicolamorandi-backend.loadbalancer.server.port=80"
+      - "traefik.http.routers.nicolamorandi-backend.tls.certresolver=le"
+      - "traefik.http.routers.nicolamorandi-backend.tls.domains[0].main=nicolamorandi-backend.morandizzi.freeddns.org"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.nicolamorandi-backend.middlewares=redirect-to-https@docker"
+
+  db:
+    image: postgres
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: nicolamorandi
+      POSTGRES_USER: nicolamorandi
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+
+networks:
+  default:
+    external:
+      name: traefik-network
+
+volumes:
+  postgres_data:
+  backend_media:
+  backend_static:
+  backend_logs:
+

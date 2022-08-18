@@ -1,0 +1,16 @@
+{
+  "name": "OdorizziTrattori",
+  "version": "0.0.1",
+  "author": "Morandizzi's Family",
+  "homepage": "odorizzitrattori.morandizzi.freeddns.org",
+  "scripts": {
+    "setup": "cd backend && pip install pre-commit && pre-commit run --all-files",
+    "dev-start-docker": "docker-compose --project-name nicolamorandi -f docker/docker-compose.dev.yml up -d",
+    "generate-swagger": "curl http://localhost:8000/api/schema -L > backend-swagger.yaml && ng-openapi-gen --input backend-swagger.yaml --output frontendc/src/app/core/api && rm backend-swagger.yaml"
+  },
+  "private": true,
+  "description": "An Ionic project",
+  "devDependencies": {
+    "ng-openapi-gen": "^0.21.2"
+  }
+}

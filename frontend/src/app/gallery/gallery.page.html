@@ -1,0 +1,53 @@
+<ng-container *ngIf="category$ | async as category">
+  <ng-container *ngIf="photos$ | async as photos">
+    <ion-header [translucent]="true">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title
+          >{{ (category === 'all' ? 'home' : category) | titlecase }}</ion-title
+        >
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content [fullscreen]="true">
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large"
+            >AAA{{ (category === 'all' ? 'home' : category) | titlecase
+            }}</ion-title
+          >
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col
+            [size]="12"
+            [sizeMd]="4"
+            class="flex ion-align-items-center ion-justify-content-center"
+            *ngFor="let photo of photos.results"
+          >
+            <img class="w-100" [src]="photo.photoLowRes" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-content>
+    <ion-footer>
+      <ion-toolbar>
+        <div class="flex ion-align-items-center ion-justify-content-center">
+          <div class="ion-margin-vertical">
+            <a
+              class="ion-margin-end"
+              [routerLink]="['../', i+1]"
+              routerLinkActive="selected"
+              *ngFor="let index of [].constructor((photos.count ?? 1) | pageCounter : pageSize); let i = index"
+              >{{ i + 1}}</a
+            >
+          </div>
+        </div>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-container>
+</ng-container>

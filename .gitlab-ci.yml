@@ -1,0 +1,159 @@
+variables:
+  CI_BACKEND_IMAGE: '$CI_REGISTRY_IMAGE/backend:latest'
+  CI_FRONTEND_IMAGE: '$CI_REGISTRY_IMAGE/frontend:latest'
+  CI_FRONTEND_DEPENDENCIES_CACHE: '$CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR-frontend'
+  CI_TESTING_DEPLOY: 'docker-compose --project-name=nicolamorandi -f docker/docker-compose.prod.yml'
+  NG: ng
+  BUILD_ARGS: --prod
+
+#services:
+#  - postgres:12.2-alpine
+
+stages:
+  - deps
+  - check
+  - test
+  - build
+  - dockerize
+  - deploy
+
+install-deps-frontend:
+  stage: deps
+  image: node:18.4.0-buster
+  tags:
+    - rpi-ci-docker
+  cache:
+    key: $CI_FRONTEND_DEPENDENCIES_CACHE
+    paths:
+      - frontend/node_modules/
+  script:
+    - cd frontend
+    - npm ci
+  only:
+    changes:
+      - frontend/package.json
+
+check-backend:
+  stage: check
+  image: python:3.8.3-buster
+  tags:
+    - rpi-ci-docker
+  script:
+    - cd backend
+    - python -m pip install flake8==3.8.3
+    - python -m flake8  --max-line-length=120 --exclude=migrations .
+
+check-frontend:
+  stage: check
+  image: node:18.4.0-buster
+  tags:
+    - rpi-ci-docker
+  cache:
+    key: $CI_FRONTEND_DEPENDENCIES_CACHE
+    paths:
+      - frontend/node_modules/
+    policy: pull
+  script:
+    - cd frontend
+    - npm run lint
+    - npm run prettier-check
+
+build-frontend:
+  stage: build
+  image: node:18.4.0-buster
+  tags:
+    - rpi-ci-docker
+  cache:
+    key: $CI_FRONTEND_DEPENDENCIES_CACHE
+    paths:
+      - frontend/node_modules/
+    policy: pull
+  script:
+    - cd frontend
+    - npm run ionic-build-prod
+  artifacts:
+    paths:
+      - frontend/www
+  only:
+    - master
+
+dockerize-backend:
+  stage: dockerize
+  tags:
+    - rpi-ci
+  script:
+    - docker build -t $CI_BACKEND_IMAGE ./backend
+    - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
+    - docker push $CI_BACKEND_IMAGE
+  only:
+    - master
+
+dockerize-frontend:
+  stage: dockerize
+  tags:
+    - rpi-ci
+  script:
+    - cd frontend
+    - docker build -t $CI_FRONTEND_IMAGE .
+    - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
+    - docker push $CI_FRONTEND_IMAGE
+  dependencies:
+    - build-frontend
+  only:
+    - master
+
+#check-api:
+#  stage: check
+#  tags:
+#    - raspberry
+#  script:
+#    - cd backend
+#    - cp .env.gitlab .env
+#    - pip install -r requirements.txt
+#    - python manage.py check
+#
+#check-frontend:
+#  image: node:14.4.0-buster
+#  stage: check
+#  tags:
+#    - raspberry
+#  script:
+#    - cd frontend
+#    - npm ci
+#    - $NG build --configuration=ci-check
+#
+#test-api:
+#  stage: test
+#  tags:
+#    - raspberry
+#  script:
+#    - cd backend
+#    - cp .env.gitlab .env
+#    - pip install -r requirements.txt
+#    - pip install coverage
+#    - coverage erase
+#    - coverage run --source='.' manage.py test --noinput --parallel
+#    - coverage xml -i -o coverage-reports/coverage-barboon.xml
+#  artifacts:
+#    expire_in: 1 days
+#    paths:
+#      - backend/coverage-reports/coverage-barboon.xml
+
+deploy-testing:
+  stage: deploy
+  tags:
+    - rpi-deploy
+  script:
+    - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
+    - $CI_TESTING_DEPLOY pull
+    - $CI_TESTING_DEPLOY down
+    - $CI_TESTING_DEPLOY up --build -d
+#    - curl -X POST -H 'Content-Type: application/json' -d '{\'chat_id\': \'$TELEGRAM_CHAT_ID\', \'text\': \'CI: new version was deployed successfully\'}' https://api.telegram.org/bot$TELEGRAM_BOT/sendMessage
+  variables:
+    PROD_BACKEND_IMAGE: "$CI_BACKEND_IMAGE"
+    PROD_FRONTEND_IMAGE: "$CI_FRONTEND_IMAGE"
+  only:
+     - master
+  environment:
+    name: testing
+    url: https://nicolamorandi.morandizzi.freeddns.org
