@@ -25,6 +25,7 @@ services:
     restart: unless-stopped
     environment:
       - CORS_ALLOWED_ORIGINS=https://nicolamorandi.morandizzi.freeddns.org
+      - CSRF_TRUSTED_ORIGINS=https://nicolamorandi-backend.morandizzi.freeddns.org
       - HOST=nicolamorandi-backend.morandizzi.freeddns.org
       - DATABASE_URL=psql://nicolamorandi:${PROD_DATABASE_PASSWORD}@db/nicolamorandi
       - SECRET_KEY=${DJANGO_SECRET_KEY}

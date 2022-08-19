@@ -24,7 +24,8 @@ env = environ.Env(
     MEDIA_ROOT=(str, os.path.join(BASE_DIR, "media")),
     SECRET_KEY=(str, "secret_key"),
     HOST=(str, "*"),
-    CORS_ALLOWED_ORIGINS=(list, ["http://localhost:8100"])
+    CORS_ALLOWED_ORIGINS=(list, ["http://localhost:8100"]),
+    CSRF_TRUSTED_ORIGINS=(list, ["http://localhost:8100"])
 )
 environ.Env.read_env(env_file=f"{BASE_DIR}/.env")
 
@@ -39,7 +40,7 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = [env("HOST")]
 CORS_ALLOWED_ORIGINS = env("CORS_ALLOWED_ORIGINS")
-CSRF_TRUSTED_ORIGINS = env("CORS_ALLOWED_ORIGINS")
+CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 
 # Application definition
