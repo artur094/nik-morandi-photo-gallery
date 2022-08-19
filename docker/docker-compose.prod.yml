@@ -56,10 +56,10 @@ services:
       POSTGRES_USER: nicolamorandi
       POSTGRES_PASSWORD: ${PROD_DATABASE_PASSWORD}
 
-networks:
-  default:
-    external:
-      name: traefik-network
+#networks:
+#  default:
+#    external:
+#      name: traefik-network
 
 volumes:
   postgres_data:
