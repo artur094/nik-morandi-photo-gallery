@@ -3,9 +3,13 @@ services:
   frontend:
     image: ${PROD_FRONTEND_IMAGE}
     restart: unless-stopped
+    networks:
+      - default
+      - traefik-network
     labels:
       # Frontend
       - "traefik.enable=true"
+      - "traefik.docker.network=traefik-network"
       - "traefik.http.routers.nicolamorandi.rule=Host(`nicolamorandi.morandizzi.freeddns.org`)"
       - "traefik.http.routers.nicolamorandi.entrypoints=websecure"
       - "traefik.http.routers.nicolamorandi.tls=true"
@@ -33,9 +37,13 @@ services:
       - backend_logs:/usr/src/app/logs
     user:
       www-data:www-data
+    networks:
+      - default
+      - traefik-network
     labels:
       # Backend
       - "traefik.enable=true"
+      - "traefik.docker.network=traefik-network"
       - "traefik.http.routers.nicolamorandi-backend.rule=Host(`nicolamorandi-backend.morandizzi.freeddns.org`)"
       - "traefik.http.routers.nicolamorandi-backend.entrypoints=websecure"
       - "traefik.http.routers.nicolamorandi-backend.tls=true"
@@ -56,10 +64,9 @@ services:
       POSTGRES_USER: nicolamorandi
       POSTGRES_PASSWORD: ${PROD_DATABASE_PASSWORD}
 
-#networks:
-#  default:
-#    external:
-#      name: traefik-network
+networks:
+  traefik-network:
+    external: true
 
 volumes:
   postgres_data:
