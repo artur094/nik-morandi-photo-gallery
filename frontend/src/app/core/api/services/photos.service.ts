@@ -16,10 +16,7 @@ import { Photo } from '../models/photo';
   providedIn: 'root',
 })
 export class PhotosService extends BaseService {
-  constructor(
-    config: ApiConfiguration,
-    http: HttpClient
-  ) {
+  constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
   }
 
@@ -49,25 +46,35 @@ export class PhotosService extends BaseService {
      */
     page?: number;
   }): Observable<StrictHttpResponse<PaginatedPhotoList>> {
-
-    const rb = new RequestBuilder(this.rootUrl, PhotosService.PhotosListPath, 'get');
+    const rb = new RequestBuilder(
+      this.rootUrl,
+      PhotosService.PhotosListPath,
+      'get'
+    );
     if (params) {
       rb.query('category__name__iexact', params.category__name__iexact, {});
-      rb.query('category__name__in', params.category__name__in, {"style":"form","explode":false});
+      rb.query('category__name__in', params.category__name__in, {
+        style: 'form',
+        explode: false,
+      });
       rb.query('created_at__gte', params.created_at__gte, {});
       rb.query('created_at__lte', params.created_at__lte, {});
       rb.query('page', params.page, {});
     }
 
-    return this.http.request(rb.build({
-      responseType: 'json',
-      accept: 'application/json'
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<PaginatedPhotoList>;
-      })
-    );
+    return this.http
+      .request(
+        rb.build({
+          responseType: 'json',
+          accept: 'application/json',
+        })
+      )
+      .pipe(
+        filter((r: any) => r instanceof HttpResponse),
+        map((r: HttpResponse<any>) => {
+          return r as StrictHttpResponse<PaginatedPhotoList>;
+        })
+      );
   }
 
   /**
@@ -91,9 +98,11 @@ export class PhotosService extends BaseService {
      */
     page?: number;
   }): Observable<PaginatedPhotoList> {
-
     return this.photosList$Response(params).pipe(
-      map((r: StrictHttpResponse<PaginatedPhotoList>) => r.body as PaginatedPhotoList)
+      map(
+        (r: StrictHttpResponse<PaginatedPhotoList>) =>
+          r.body as PaginatedPhotoList
+      )
     );
   }
 
@@ -109,27 +118,33 @@ export class PhotosService extends BaseService {
    * This method doesn't expect any request body.
    */
   photosRetrieve$Response(params: {
-
     /**
      * A unique integer value identifying this Foto.
      */
     id: number;
   }): Observable<StrictHttpResponse<Photo>> {
-
-    const rb = new RequestBuilder(this.rootUrl, PhotosService.PhotosRetrievePath, 'get');
+    const rb = new RequestBuilder(
+      this.rootUrl,
+      PhotosService.PhotosRetrievePath,
+      'get'
+    );
     if (params) {
       rb.path('id', params.id, {});
     }
 
-    return this.http.request(rb.build({
-      responseType: 'json',
-      accept: 'application/json'
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Photo>;
-      })
-    );
+    return this.http
+      .request(
+        rb.build({
+          responseType: 'json',
+          accept: 'application/json',
+        })
+      )
+      .pipe(
+        filter((r: any) => r instanceof HttpResponse),
+        map((r: HttpResponse<any>) => {
+          return r as StrictHttpResponse<Photo>;
+        })
+      );
   }
 
   /**
@@ -139,16 +154,13 @@ export class PhotosService extends BaseService {
    * This method doesn't expect any request body.
    */
   photosRetrieve(params: {
-
     /**
      * A unique integer value identifying this Foto.
      */
     id: number;
   }): Observable<Photo> {
-
     return this.photosRetrieve$Response(params).pipe(
       map((r: StrictHttpResponse<Photo>) => r.body as Photo)
     );
   }
-
 }
