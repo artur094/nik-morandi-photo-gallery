@@ -25,7 +25,7 @@ export class GalleryPage {
       this.photosService
         .photosList({
           // eslint-disable-next-line @typescript-eslint/naming-convention
-          category__name: category !== 'all' ? category : undefined,
+          category__name__iexact: category !== 'all' ? category : undefined,
           page: +page,
         })
         .pipe(this.loadingService.withLoading())

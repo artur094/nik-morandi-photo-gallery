@@ -6,6 +6,6 @@ class PhotoFilter(filters.FilterSet):
     class Meta:
         model = Photo
         fields = {
-            # "created_at": ["lte", "gte"],
-            "category__name": ["exact", "in"],
+            "created_at": ["lte", "gte"],
+            "category__name": ["iexact", "in"],
         }

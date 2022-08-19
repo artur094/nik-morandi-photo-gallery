@@ -1,5 +1,24 @@
+import uuid
+
 from django.contrib.auth.models import User
 from django.db import models
+
+
+def get_image_path(instance, filename, directory):
+    extension = filename.split('.')[-1]
+    return f'images/{directory}/{str(uuid.uuid4())}.{extension}'
+
+
+def get_full_res_image_path(instance, filename):
+    return get_image_path(instance, filename, "full_res")
+
+
+def get_low_res_image_path(instance, filename):
+    return get_image_path(instance, filename, "low_res")
+
+
+def get_thumbnail_image_path(instance, filename):
+    return get_image_path(instance, filename, "thumbnails")
 
 
 class AuditModel(models.Model):
@@ -24,9 +43,9 @@ class Category(models.Model):
 
 
 class Photo(AuditModel, models.Model):
-    photo = models.ImageField()
-    photo_low_res = models.ImageField()
-    thumbnail = models.ImageField()
+    photo = models.ImageField(upload_to=get_full_res_image_path)
+    photo_low_res = models.ImageField(upload_to=get_low_res_image_path)
+    thumbnail = models.ImageField(upload_to=get_thumbnail_image_path)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
 
     class Meta:
