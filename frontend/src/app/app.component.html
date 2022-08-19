@@ -3,13 +3,15 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>NicolaMorandi</ion-list-header>
-          <ion-note
-            ><a href="mailto:nik.morandi@gmail.com"
-              >nik.morandi@gmail.com</a
-            ></ion-note
-          >
-
+          <ion-list-header class="flex ion-justify-content-start ion-align-items-center">
+            <div class="ion-margin-end"><img class="logo" src="assets/logo.png"></div>
+            <div>
+              NicolaMorandi
+            </div>
+          </ion-list-header>
+          <ion-note>
+            <a href="mailto:nik.morandi@gmail.com">nik.morandi@gmail.com</a>
+          </ion-note>
           <ion-menu-toggle
             auto-hide="false"
             *ngFor="let p of pages$ | async; let i = index"
