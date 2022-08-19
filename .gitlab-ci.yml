@@ -152,6 +152,7 @@ deploy-testing:
   variables:
     PROD_BACKEND_IMAGE: "$CI_BACKEND_IMAGE"
     PROD_FRONTEND_IMAGE: "$CI_FRONTEND_IMAGE"
+    PROD_DATABASE_PASSWORD: "$DATABASE_PASSWORD"
   only:
      - master
   environment:
