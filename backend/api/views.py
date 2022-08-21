@@ -13,7 +13,7 @@ class PhotoPagination(pagination.PageNumberPagination):
 
 class CategoryViewSet(ReadOnlyModelViewSet):
     authentication_classes = []
-    queryset = Category.objects.all().order_by('name')
+    queryset = Category.objects.all().order_by('order', 'name')
     serializer_class = serializers.CategorySerializer
 
 

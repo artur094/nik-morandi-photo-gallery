@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'drf_spectacular',
     "api",
     "django_filters",
-    "djangorestframework_camel_case"
+    "djangorestframework_camel_case",
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 MIDDLEWARE = [
