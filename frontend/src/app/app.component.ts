@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoriesService } from './core/api/services/categories.service';
 import { map, tap } from 'rxjs/operators';
+import { UpdatePwaService } from './core/services/update-pwa.service';
 
 interface MenuItem {
   title: string;
@@ -31,5 +32,10 @@ export class AppComponent {
     map((categories: MenuItem[]) => [this.homePage].concat(categories))
   );
 
-  constructor(private categoryService: CategoriesService) {}
+  constructor(
+    private categoryService: CategoriesService,
+    private updatePwaService: UpdatePwaService
+  ) {
+    this.updatePwaService.checkForUpdates();
+  }
 }

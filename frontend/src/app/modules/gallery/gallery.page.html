@@ -1,3 +1,4 @@
+<ion-backdrop *ngIf="refresherStatus$ | async"></ion-backdrop>
 <ng-container *ngIf="category$ | async as category">
   <ng-container *ngIf="photos$ | async as photos">
     <ion-header [translucent]="true">
@@ -11,7 +12,10 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content [fullscreen]="true">
+    <ion-content [fullscreen]="true" scroll-y="false">
+      <ion-refresher #refresher slot="fixed" (ionRefresh)="startRefresh()">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       <ion-grid>
         <ion-row>
           <ion-col

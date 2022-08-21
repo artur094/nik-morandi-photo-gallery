@@ -8,6 +8,7 @@ import { ApiModule } from './core/api/api.module';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { PhotoGalleryModule } from '@twogate/ngx-photo-gallery';
+import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,8 +28,17 @@ import { PhotoGalleryModule } from '@twogate/ngx-photo-gallery';
         modal: true,
       },
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    SwUpdate,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
