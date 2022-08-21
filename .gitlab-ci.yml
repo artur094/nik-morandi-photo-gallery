@@ -17,46 +17,46 @@ stages:
   - dockerize
   - deploy
 
-#install-deps-frontend:
-#  stage: deps
-#  image: node:18.4.0-buster
-#  tags:
-#    - rpi-ci-docker
-#  cache:
-#    key: $CI_FRONTEND_DEPENDENCIES_CACHE
-#    paths:
-#      - frontend/node_modules/
-#  script:
-#    - cd frontend
-#    - npm ci
-#  only:
-#    changes:
-#      - frontend/package.json
-#
-#check-backend:
-#  stage: check
-#  image: python:3.8.3-buster
-#  tags:
-#    - rpi-ci-docker
-#  script:
-#    - cd backend
-#    - python -m pip install flake8==3.8.3
-#    - python -m flake8  --max-line-length=120 --exclude=migrations .
-#
-#check-frontend:
-#  stage: check
-#  image: node:18.4.0-buster
-#  tags:
-#    - rpi-ci-docker
-#  cache:
-#    key: $CI_FRONTEND_DEPENDENCIES_CACHE
-#    paths:
-#      - frontend/node_modules/
-#    policy: pull
-#  script:
-#    - cd frontend
-#    - npm run lint
-#    - npm run prettier-check
+install-deps-frontend:
+  stage: deps
+  image: node:18.4.0-buster
+  tags:
+    - rpi-ci-docker
+  cache:
+    key: $CI_FRONTEND_DEPENDENCIES_CACHE
+    paths:
+      - frontend/node_modules/
+  script:
+    - cd frontend
+    - npm ci
+  only:
+    changes:
+      - frontend/package.json
+
+check-backend:
+  stage: check
+  image: python:3.8.3-buster
+  tags:
+    - rpi-ci-docker
+  script:
+    - cd backend
+    - python -m pip install flake8==3.8.3
+    - python -m flake8  --max-line-length=120 --exclude=migrations .
+
+check-frontend:
+  stage: check
+  image: node:18.4.0-buster
+  tags:
+    - rpi-ci-docker
+  cache:
+    key: $CI_FRONTEND_DEPENDENCIES_CACHE
+    paths:
+      - frontend/node_modules/
+    policy: pull
+  script:
+    - cd frontend
+    - npm run lint
+    - npm run prettier-check
 
 build-frontend:
   stage: build
