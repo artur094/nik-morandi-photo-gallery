@@ -24,7 +24,7 @@ import { PhotoGalleryModule } from '@twogate/ngx-photo-gallery';
         isClickableElement: () => false,
         zoomEl: true,
         tapToClose: true,
-        modal: true
+        modal: true,
       },
     }),
   ],
