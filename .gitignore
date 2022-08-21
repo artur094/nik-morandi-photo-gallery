@@ -516,3 +516,7 @@ Temporary Items
 # https://plugins.jetbrains.com/plugin/12206-codestream
 
 # End of https://www.toptal.com/developers/gitignore/api/python,django,angular,visualstudiocode,intellij,webstorm,pycharm,macos
+
+frontend/node_modules
+frontend/www
+frontend/.angular
