@@ -20,6 +20,11 @@ import { PhotoGalleryModule } from '@twogate/ngx-photo-gallery';
     PhotoGalleryModule.forRoot({
       defaultOptions: {
         fullscreenEl: true,
+        closeOnScroll: false,
+        isClickableElement: () => false,
+        zoomEl: true,
+        tapToClose: true,
+        modal: true
       },
     }),
   ],

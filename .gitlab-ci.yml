@@ -29,9 +29,9 @@ install-deps-frontend:
   script:
     - cd frontend
     - npm ci
-  only:
-    changes:
-      - frontend/package.json
+  #only:
+  #  changes:
+  #    - frontend/package.json
 
 check-backend:
   stage: check
@@ -148,7 +148,7 @@ deploy-testing:
     - $CI_TESTING_DEPLOY pull
     - $CI_TESTING_DEPLOY down
     - $CI_TESTING_DEPLOY up --build -d
-#    - curl -X POST -H 'Content-Type: application/json' -d '{\'chat_id\': \'$TELEGRAM_CHAT_ID\', \'text\': \'CI: new version was deployed successfully\'}' https://api.telegram.org/bot$TELEGRAM_BOT/sendMessage
+    - eval $TELEGRAM_NOTIFY_MESSAGE_COMMAND_TESTING
   variables:
     PROD_BACKEND_IMAGE: "$CI_BACKEND_IMAGE"
     PROD_FRONTEND_IMAGE: "$CI_FRONTEND_IMAGE"
