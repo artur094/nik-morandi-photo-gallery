@@ -1,7 +1,7 @@
 <ng-container *ngIf="category$ | async as category">
   <ng-container *ngIf="photos$ | async as photos">
     <ion-header [translucent]="true">
-      <ion-toolbar>
+      <ion-toolbar mode="md">
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
@@ -12,15 +12,6 @@
     </ion-header>
 
     <ion-content [fullscreen]="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large"
-            >{{ (category === 'all' ? 'home' : category) | titlecase
-            }}</ion-title
-          >
-        </ion-toolbar>
-      </ion-header>
-
       <ion-grid>
         <ion-row>
           <ion-col
@@ -28,6 +19,7 @@
             [sizeMd]="4"
             class="flex ion-align-items-center ion-justify-content-center"
             *ngFor="let photo of photos.results"
+            [photoGallery]="photo.photo"
           >
             <img class="w-100" [src]="photo.photoLowRes" />
           </ion-col>

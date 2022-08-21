@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { debounceTime, map, switchMap } from 'rxjs/operators';
-import { PhotosService } from '../core/api/services/photos.service';
+import { PhotosService } from '../../core/api/services/photos.service';
 import { combineLatest } from 'rxjs';
-import { LoadingService } from '../core/services/loading.service';
+import { LoadingService } from '../../core/services/loading.service';
+import { Photo } from '../../core/api/models/photo';
+import { GenericModalService } from '../../shared/services/generic-modal.service';
 
 @Component({
   selector: 'app-gallery',

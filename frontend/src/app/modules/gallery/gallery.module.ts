@@ -7,7 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { GalleryPageRoutingModule } from './gallery-routing.module';
 
 import { GalleryPage } from './gallery.page';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
+import { PhotoGalleryModule } from '@twogate/ngx-photo-gallery';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SharedModule } from '../shared/shared.module';
     IonicModule,
     GalleryPageRoutingModule,
     SharedModule,
+    PhotoGalleryModule,
   ],
   declarations: [GalleryPage],
 })
