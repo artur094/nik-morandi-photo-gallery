@@ -30,3 +30,8 @@ ion-menu-button {
 .selected {
   font-weight: bold;
 }
+
+ion-grid {
+  height: 100%;
+  overflow-y: auto;
+}
