@@ -25,7 +25,7 @@ export class UpdatePwaService {
     this.genericAlertService
       .showAlert(
         'Aggiornamento',
-        'La pagina verrà aggiornata per scaricare l\'ultima versione.',
+        'La pagina verrà aggiornata per scaricare la versione più recente.',
         ['Ok']
       )
       .pipe(switchMap(() => from(this.updates.activateUpdate())))
