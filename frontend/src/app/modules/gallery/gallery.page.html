@@ -35,7 +35,7 @@
         </ion-row>
       </ion-grid>
     </ion-content>
-    <ion-footer>
+    <ion-footer *ngIf="photos.count > pageSize">
       <ion-toolbar>
         <div class="flex ion-align-items-center ion-justify-content-center">
           <div class="ion-margin-vertical">
