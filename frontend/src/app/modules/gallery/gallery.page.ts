@@ -1,17 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {
-  debounceTime,
-  finalize,
-  map,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
-import { PhotosService } from '../../core/api/services/photos.service';
-import { BehaviorSubject, combineLatest, of, Subject } from 'rxjs';
-import { LoadingService } from '../../core/services/loading.service';
-import { IonRefresher } from '@ionic/angular';
+import {Component, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {debounceTime, distinctUntilChanged, finalize, map, startWith, switchMap,} from 'rxjs/operators';
+import {PhotosService} from '../../core/api/services/photos.service';
+import {BehaviorSubject, combineLatest, of, Subject} from 'rxjs';
+import {LoadingService} from '../../core/services/loading.service';
+import {IonRefresher} from '@ionic/angular';
 
 @Component({
   selector: 'app-gallery',
@@ -25,6 +18,8 @@ export class GalleryPage {
 
   readonly refresherStatus = new BehaviorSubject<boolean>(false);
   readonly refresherStatus$ = this.refresherStatus.asObservable();
+  readonly refresherEnabled = new BehaviorSubject<boolean>(true);
+  readonly refresherEnabled$ = this.refresherEnabled.asObservable().pipe(distinctUntilChanged());
   private refresherNotify = new Subject<boolean>();
 
   public category$ = this.activatedRoute.paramMap.pipe(
@@ -72,5 +67,10 @@ export class GalleryPage {
   private completeRefresh(): void {
     this.refresher?.complete();
     this.refresherStatus.next(false);
+  }
+
+  onGridScroll(event: Event): void {
+    const scrollY = (event.target as Element).scrollTop;
+    this.refresherEnabled.next(scrollY <= 0);
   }
 }
