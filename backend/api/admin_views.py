@@ -1,10 +1,10 @@
-from braces.views import SuperuserRequiredMixin
+from braces.views import StaffuserRequiredMixin
 from django.views.generic import FormView
 
 from api import forms
 
 
-class ImportPhotosAdminView(SuperuserRequiredMixin, FormView):
+class ImportPhotosAdminView(StaffuserRequiredMixin, FormView):
     form_class = forms.PhotosImportForm
     template_name = 'admin/import_photos.html'
     success_url = '/admin/api/photo/'
