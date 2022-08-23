@@ -3,6 +3,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 from rest_framework import routers
 
 from api import views
+from api.admin_views import ImportPhotosAdminView
 
 router = routers.SimpleRouter()
 router.register(r"photos", views.PhotoViewSet, basename="Photos")
@@ -11,6 +12,8 @@ router.register(r"categories", views.CategoryViewSet, basename="Categories")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path('admin/photos/import', ImportPhotosAdminView.as_view(), name='import_photos'),
+
 ]
 
 urlpatterns.extend([

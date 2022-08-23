@@ -1,0 +1,30 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n admin_urls admin_modify static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+  <a href="{% url 'admin:api_photo_changelist' %}">Foto</a>
+  <a href="{% url 'admin:api_category_changelist' %}">Categorie</a>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<form action="{% url 'import_photos' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+        <div>
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

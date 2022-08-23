@@ -19,6 +19,7 @@ class PhotoAdmin(admin.ModelAdmin):
     list_editable = ['photo', 'category', 'visible', 'description']
     fields = ('photo', 'category', 'visible', 'description')
     list_display_links = ('pk',)
+    change_list_template = 'admin/photos_change_list.html'
 
     def save_model(self, request, obj, form, change):
         if obj.pk is None:
