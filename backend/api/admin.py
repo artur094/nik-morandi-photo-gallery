@@ -6,14 +6,21 @@ from api import models
 
 @admin.register(models.Category)
 class CategoryAdmin(admin.ModelAdmin):
-    fields = ('name', 'icon', 'order')
+    list_display = ['pk', 'name', 'icon', 'order', 'visible']
+    list_editable = ['name', 'icon', 'order', 'visible']
+    fields = ('name', 'icon', 'order', 'visible')
     ordering = ('order', 'name')
+    list_display_links = ('pk',)
 
 
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    fields = ('photo', 'category')
+    list_display = ['pk', 'photo', 'category', 'visible', 'description']
+    list_editable = ['photo', 'category', 'visible', 'description']
+    fields = ('photo', 'category', 'visible', 'description')
+    list_display_links = ('pk',)
 
     def save_model(self, request, obj, form, change):
-        obj.created_by = request.user
+        if obj.pk is None:
+            obj.created_by = request.user
         super().save_model(request, obj, form, change)

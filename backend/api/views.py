@@ -13,13 +13,13 @@ class PhotoPagination(pagination.PageNumberPagination):
 
 class CategoryViewSet(ReadOnlyModelViewSet):
     authentication_classes = []
-    queryset = Category.objects.all().order_by('order', 'name')
+    queryset = Category.objects.filter(visible=True).order_by('order', 'name')
     serializer_class = serializers.CategorySerializer
 
 
 class PhotoViewSet(ReadOnlyModelViewSet):
     authentication_classes = []
-    queryset = Photo.objects.all().order_by('pk')
+    queryset = Photo.objects.filter(visible=True).order_by('-created_at')
     serializer_class = serializers.PhotoSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = PhotoFilter

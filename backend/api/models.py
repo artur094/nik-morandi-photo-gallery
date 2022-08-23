@@ -3,7 +3,7 @@ import sys
 import uuid
 from io import BytesIO
 
-from PIL import Image
+from PIL import Image, ImageOps
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
@@ -44,6 +44,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     icon = models.CharField(max_length=32, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
+    visible = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Categoria"
@@ -58,13 +59,15 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.name} (icon={self.icon}, order={self.order})"
+        return f"{self.name} ({self.icon})"
 
 
 class Photo(AuditModel, models.Model):
     photo = models.ImageField(upload_to=get_full_res_image_path)
     photo_low_res = models.ImageField(upload_to=get_low_res_image_path)
     thumbnail = models.ImageField(upload_to=get_thumbnail_image_path)
+    description = models.CharField(max_length=2048, blank=True, null=True)
+    visible = models.BooleanField(default=True)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
 
     class Meta:
@@ -73,14 +76,14 @@ class Photo(AuditModel, models.Model):
 
     def save(self, *args, **kwargs):
         super(Photo, self).save(*args, **kwargs)
-        self.photo_low_res = self.compress_image(self.photo, (1920, 1280), 80)
+        self.photo_low_res = self.compress_image(self.photo, (1920, 1080), 80)
         self.thumbnail = self.compress_image(self.photo, (1280, 720), 50)
         super(Photo, self).save(*args, **kwargs)
 
     def compress_image(self, full_res_photo, size, quality):
         tmp_image = Image.open(full_res_photo)
         output_io_stream = BytesIO()
-        tmp_resized = tmp_image.resize(size)
+        tmp_resized = ImageOps.fit(tmp_image, size)
         tmp_resized.save(output_io_stream, format=tmp_image.format, quality=quality)
         output_io_stream.seek(0)
         compressed_image = InMemoryUploadedFile(output_io_stream,

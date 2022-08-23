@@ -35,3 +35,23 @@ ion-grid {
   height: 100%;
   overflow-y: auto;
 }
+
+.image-wrapper {
+  width: 100%;
+  padding-bottom: 56.25%;
+  background-color: black;
+  position: relative;
+
+  .image-proportioned-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    img {
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}

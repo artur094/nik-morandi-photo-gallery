@@ -3,7 +3,7 @@ build
 coverage
 www
 node_modules
-.angularAAA
+.angular
 e2e
 resources
 # Ignore all HTML files:

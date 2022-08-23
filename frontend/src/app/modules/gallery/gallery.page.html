@@ -25,7 +25,13 @@
             *ngFor="let photo of photos.results"
             [photoGallery]="photo.photo"
           >
-            <img class="w-100" [src]="photo.photoLowRes" />
+            <div
+              class="image-wrapper flex ion-align-items-center ion-justify-content-center"
+            >
+              <div class="image-proportioned-wrapper">
+                <img class="w-100" [src]="photo.photoLowRes" />
+              </div>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
