@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface Category {
-  icon: string;
+  icon?: null | string;
   name: string;
 }

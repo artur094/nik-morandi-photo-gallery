@@ -24,6 +24,7 @@
             class="flex ion-align-items-center ion-justify-content-center"
             *ngFor="let photo of photos.results"
             [photoGallery]="photo.photo"
+            [photoGalleryCaption]="photo.description"
           >
             <div
               class="image-wrapper flex ion-align-items-center ion-justify-content-center"

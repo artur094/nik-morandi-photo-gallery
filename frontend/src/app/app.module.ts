@@ -26,6 +26,7 @@ import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker';
         zoomEl: true,
         tapToClose: true,
         modal: true,
+        captionEl: true,
       },
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {

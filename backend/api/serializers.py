@@ -18,5 +18,6 @@ class PhotoSerializer(serializers.ModelSerializer):
             "photo_low_res",
             "thumbnail",
             "category",
+            "description",
             "created_at"
         ]
