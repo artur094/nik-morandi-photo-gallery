@@ -25,6 +25,12 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import "theme/fonts.scss";
+
+body {
+  --ion-font-family: "Chillax-Medium", sans-serif;
+}
+
 .flex {
   display: flex;
 }
