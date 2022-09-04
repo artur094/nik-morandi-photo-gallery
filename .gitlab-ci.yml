@@ -82,6 +82,7 @@ dockerize-backend:
   tags:
     - rpi-ci
   script:
+    - docker buildx use $DOCKER_BUILDX_NAME
     - docker buildx build --platform linux/amd64,linux/arm64 -t $CI_BACKEND_IMAGE ./backend
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
     - docker push $CI_BACKEND_IMAGE
@@ -94,6 +95,7 @@ dockerize-frontend:
     - rpi-ci
   script:
     - cd frontend
+    - docker buildx use $DOCKER_BUILDX_NAME
     - docker buildx build --platform linux/amd64,linux/arm64 -t $CI_FRONTEND_IMAGE .
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
     - docker push $CI_FRONTEND_IMAGE
