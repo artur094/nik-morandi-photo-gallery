@@ -9,17 +9,8 @@ done
 
 echo "PostgreSQL started"
 
-python manage.py migrate
 python manage.py collectstatic --no-input
+python manage.py flush --no-input
+python manage.py migrate
 
-mkdir -p /usr/src/app/media/
-chown -R "$MOD_WSGI_USER" /usr/src/app/media/
-chown -R "$MOD_WSGI_USER" /usr/src/app/static/
-
-exec mod_wsgi-express start-server \
-     --log-to-terminal \
-     --startup-log \
-     --port 80 \
-     --url-alias /static /usr/src/app/static \
-     --url-alias /media /usr/src/app/media \
-     "backend/wsgi.py"
+exec "$@"

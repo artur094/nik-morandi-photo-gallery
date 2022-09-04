@@ -30,17 +30,25 @@ services:
       - DATABASE_URL=psql://nicolamorandi:${PROD_DATABASE_PASSWORD}@db/nicolamorandi
       - SECRET_KEY=${DJANGO_SECRET_KEY}
       - DEBUG=False
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
     depends_on:
       - db
     volumes:
       - backend_media:/usr/src/app/media
       - backend_static:/usr/src/app/static
       - backend_logs:/usr/src/app/logs
-    user:
-      www-data:www-data
     networks:
       - default
       - traefik-network
+
+  backend-nginx:
+    image: nginx:1.23.1-alpine
+    volumes:
+      - ../backend/nginx.conf:/etc/nginx/conf.d/default.conf
+      - backend_media:/mediafiles
+      - backend_static:/staticfiles
+    depends_on:
+      - backend
     labels:
       # Backend
       - "traefik.enable=true"
