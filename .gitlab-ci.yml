@@ -1,6 +1,10 @@
 variables:
-  CI_BACKEND_IMAGE: '$CI_REGISTRY_IMAGE/backend:latest'
-  CI_FRONTEND_IMAGE: '$CI_REGISTRY_IMAGE/frontend:latest'
+  CI_BACKEND_IMAGE: '$CI_REGISTRY_IMAGE/backend'
+  CI_BACKEND_IMAGE_ARM64: '$CI_BACKEND_IMAGE-arm64:latest'
+  CI_BACKEND_IMAGE_AMD64: '$CI_BACKEND_IMAGE-amd64:latest'
+  CI_FRONTEND_IMAGE: '$CI_REGISTRY_IMAGE/frontend'
+  CI_FRONTEND_IMAGE_ARM64: 'CI_FRONTEND_IMAGE-arm64:latest'
+  CI_FRONTEND_IMAGE_AMD64: 'CI_FRONTEND_IMAGE-amd64:latest'
   CI_FRONTEND_DEPENDENCIES_CACHE: '$CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR-frontend'
   CI_TESTING_DEPLOY: 'docker-compose --project-name=nicolamorandi -f docker/docker-compose.prod.yml'
   NG: ng
@@ -77,28 +81,55 @@ build-frontend:
   only:
     - master
 
-dockerize-backend:
+dockerize-backend-arm64:
   stage: dockerize
   tags:
     - rpi-ci
   script:
     - docker buildx use $DOCKER_BUILDX_NAME
-    - docker buildx build --platform linux/amd64,linux/arm64 -t $CI_BACKEND_IMAGE ./backend
+    - docker buildx build --platform linux/arm64 -t $CI_BACKEND_IMAGE_ARM64 ./backend
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
-    - docker push $CI_BACKEND_IMAGE
+    - docker push $CI_BACKEND_IMAGE_ARM64
   only:
     - master
 
-dockerize-frontend:
+dockerize-backend-amd64:
+  stage: dockerize
+  tags:
+    - rpi-ci
+  script:
+    - docker buildx use $DOCKER_BUILDX_NAME
+    - docker buildx build --platform linux/amd64 -t $CI_BACKEND_IMAGE_AMD64 ./backend
+    - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
+    - docker push $CI_BACKEND_IMAGE_AMD64
+  only:
+    - master
+
+dockerize-frontend-arm64:
   stage: dockerize
   tags:
     - rpi-ci
   script:
     - cd frontend
     - docker buildx use $DOCKER_BUILDX_NAME
-    - docker buildx build --platform linux/amd64,linux/arm64 -t $CI_FRONTEND_IMAGE .
+    - docker buildx build --platform linux/arm64 -t $CI_FRONTEND_IMAGE_ARM64 .
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
-    - docker push $CI_FRONTEND_IMAGE
+    - docker push $CI_FRONTEND_IMAGE_ARM64
+  dependencies:
+    - build-frontend
+  only:
+    - master
+
+dockerize-frontend-amd64:
+  stage: dockerize
+  tags:
+    - rpi-ci
+  script:
+    - cd frontend
+    - docker buildx use $DOCKER_BUILDX_NAME
+    - docker buildx build --platform linux/amd64 -t $CI_FRONTEND_IMAGE_AMD64 .
+    - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
+    - docker push $CI_FRONTEND_IMAGE_AMD64
   dependencies:
     - build-frontend
   only:
@@ -152,8 +183,8 @@ deploy-testing:
     - $CI_TESTING_DEPLOY up --build -d
     - eval $TELEGRAM_NOTIFY_MESSAGE_COMMAND_TESTING
   variables:
-    PROD_BACKEND_IMAGE: "$CI_BACKEND_IMAGE"
-    PROD_FRONTEND_IMAGE: "$CI_FRONTEND_IMAGE"
+    PROD_BACKEND_IMAGE: "CI_BACKEND_IMAGE_ARM64"
+    PROD_FRONTEND_IMAGE: "CI_FRONTEND_IMAGE_ARM64"
     PROD_DATABASE_PASSWORD: "$DATABASE_PASSWORD"
   only:
      - master
