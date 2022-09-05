@@ -1,10 +1,8 @@
 variables:
-  CI_BACKEND_IMAGE: '$CI_REGISTRY_IMAGE/backend'
-  CI_BACKEND_IMAGE_ARM64: '$CI_BACKEND_IMAGE-arm64:latest'
-  CI_BACKEND_IMAGE_AMD64: '$CI_BACKEND_IMAGE-amd64:latest'
-  CI_FRONTEND_IMAGE: '$CI_REGISTRY_IMAGE/frontend'
-  CI_FRONTEND_IMAGE_ARM64: '$CI_FRONTEND_IMAGE-arm64:latest'
-  CI_FRONTEND_IMAGE_AMD64: '$CI_FRONTEND_IMAGE-amd64:latest'
+  CI_BACKEND_IMAGE_ARM64: '$CI_REGISTRY_IMAGE/arm64/backend:latest'
+  CI_BACKEND_IMAGE_AMD64: '$CI_REGISTRY_IMAGE/amd64/backend:latest'
+  CI_FRONTEND_IMAGE_ARM64: '$CI_REGISTRY_IMAGE/arm64/frontend:latest'
+  CI_FRONTEND_IMAGE_AMD64: '$CI_REGISTRY_IMAGE/amd64/frontend:latest'
   CI_FRONTEND_DEPENDENCIES_CACHE: '$CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR-frontend'
   CI_TESTING_DEPLOY: 'docker-compose --project-name=nicolamorandi -f docker/docker-compose.prod.yml'
   NG: ng
@@ -89,6 +87,7 @@ dockerize-backend-arm64:
     - docker buildx use $DOCKER_BUILDX_NAME
     - docker buildx build --platform linux/arm64 -t $CI_BACKEND_IMAGE_ARM64 ./backend
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
+    - echo "Pushing image $CI_BACKEND_IMAGE_ARM64 to gitlab.com"
     - docker push $CI_BACKEND_IMAGE_ARM64
   only:
     - master
@@ -101,6 +100,7 @@ dockerize-backend-amd64:
     - docker buildx use $DOCKER_BUILDX_NAME
     - docker buildx build --platform linux/amd64 -t $CI_BACKEND_IMAGE_AMD64 ./backend
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
+    - echo "Pushing image $CI_BACKEND_IMAGE_AMD64 to gitlab.com"
     - docker push $CI_BACKEND_IMAGE_AMD64
   only:
     - master
@@ -114,6 +114,7 @@ dockerize-frontend-arm64:
     - docker buildx use $DOCKER_BUILDX_NAME
     - docker buildx build --platform linux/arm64 -t $CI_FRONTEND_IMAGE_ARM64 .
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
+    - echo "Pushing image $CI_FRONTEND_IMAGE_ARM64 to gitlab.com"
     - docker push $CI_FRONTEND_IMAGE_ARM64
   dependencies:
     - build-frontend
@@ -129,6 +130,7 @@ dockerize-frontend-amd64:
     - docker buildx use $DOCKER_BUILDX_NAME
     - docker buildx build --platform linux/amd64 -t $CI_FRONTEND_IMAGE_AMD64 .
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
+    - echo "Pushing image $CI_FRONTEND_IMAGE_AMD64 to gitlab.com"
     - docker push $CI_FRONTEND_IMAGE_AMD64
   dependencies:
     - build-frontend

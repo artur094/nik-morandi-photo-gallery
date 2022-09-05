@@ -5,7 +5,7 @@ FROM python:3.10-alpine
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN apk update && apk add build-base libffi-dev jpeg-dev
+RUN apk update && apk add build-base libffi-dev jpeg-dev zlib-dev
 
 # install dependencies
 RUN pip install --upgrade pip
