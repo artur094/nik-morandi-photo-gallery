@@ -35,30 +35,30 @@ install-deps-frontend:
   #  changes:
   #    - frontend/package.json
 
-check-backend:
-  stage: check
-  image: python:3.8.3-buster
-  tags:
-    - rpi-ci-docker
-  script:
-    - cd backend
-    - python -m pip install flake8==3.8.3
-    - python -m flake8  --max-line-length=120 --exclude=migrations .
-
-check-frontend:
-  stage: check
-  image: node:18.4.0-buster
-  tags:
-    - rpi-ci-docker
-  cache:
-    key: $CI_FRONTEND_DEPENDENCIES_CACHE
-    paths:
-      - frontend/node_modules/
-    policy: pull
-  script:
-    - cd frontend
-    - npm run lint
-    - npm run prettier-check
+#check-backend:
+#  stage: check
+#  image: python:3.8.3-buster
+#  tags:
+#    - rpi-ci-docker
+#  script:
+#    - cd backend
+#    - python -m pip install flake8==3.8.3
+#    - python -m flake8  --max-line-length=120 --exclude=migrations .
+#
+#check-frontend:
+#  stage: check
+#  image: node:18.4.0-buster
+#  tags:
+#    - rpi-ci-docker
+#  cache:
+#    key: $CI_FRONTEND_DEPENDENCIES_CACHE
+#    paths:
+#      - frontend/node_modules/
+#    policy: pull
+#  script:
+#    - cd frontend
+#    - npm run lint
+#    - npm run prettier-check
 
 build-frontend:
   stage: build
@@ -84,11 +84,10 @@ dockerize-backend-arm64:
   tags:
     - rpi-ci
   script:
-    - docker buildx use $DOCKER_BUILDX_NAME
-    - docker buildx build --platform linux/arm64 -t $CI_BACKEND_IMAGE_ARM64 ./backend
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
-    - echo "Pushing image $CI_BACKEND_IMAGE_ARM64 to gitlab.com"
-    - docker push $CI_BACKEND_IMAGE_ARM64
+    - docker buildx use $DOCKER_BUILDX_NAME
+    - docker buildx build --push --platform linux/arm64 -t $CI_BACKEND_IMAGE_ARM64 ./backend
+    #- docker push $CI_BACKEND_IMAGE_ARM64
   only:
     - master
 
@@ -97,11 +96,10 @@ dockerize-backend-amd64:
   tags:
     - rpi-ci
   script:
-    - docker buildx use $DOCKER_BUILDX_NAME
-    - docker buildx build --platform linux/amd64 -t $CI_BACKEND_IMAGE_AMD64 ./backend
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
-    - echo "Pushing image $CI_BACKEND_IMAGE_AMD64 to gitlab.com"
-    - docker push $CI_BACKEND_IMAGE_AMD64
+    - docker buildx use $DOCKER_BUILDX_NAME
+    - docker buildx build --push --platform linux/amd64 -t $CI_BACKEND_IMAGE_AMD64 ./backend
+    #- docker push $CI_BACKEND_IMAGE_AMD64
   only:
     - master
 
@@ -111,11 +109,10 @@ dockerize-frontend-arm64:
     - rpi-ci
   script:
     - cd frontend
-    - docker buildx use $DOCKER_BUILDX_NAME
-    - docker buildx build --platform linux/arm64 -t $CI_FRONTEND_IMAGE_ARM64 .
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
-    - echo "Pushing image $CI_FRONTEND_IMAGE_ARM64 to gitlab.com"
-    - docker push $CI_FRONTEND_IMAGE_ARM64
+    - docker buildx use $DOCKER_BUILDX_NAME
+    - docker buildx build --push --platform linux/arm64 -t $CI_FRONTEND_IMAGE_ARM64 .
+    #- docker push $CI_FRONTEND_IMAGE_ARM64
   dependencies:
     - build-frontend
   only:
@@ -127,11 +124,10 @@ dockerize-frontend-amd64:
     - rpi-ci
   script:
     - cd frontend
-    - docker buildx use $DOCKER_BUILDX_NAME
-    - docker buildx build --platform linux/amd64 -t $CI_FRONTEND_IMAGE_AMD64 .
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
-    - echo "Pushing image $CI_FRONTEND_IMAGE_AMD64 to gitlab.com"
-    - docker push $CI_FRONTEND_IMAGE_AMD64
+    - docker buildx use $DOCKER_BUILDX_NAME
+    - docker buildx build --platform linux/amd64 --push -t $CI_FRONTEND_IMAGE_AMD64 .
+    #- docker push $CI_FRONTEND_IMAGE_AMD64
   dependencies:
     - build-frontend
   only:
