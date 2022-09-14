@@ -87,7 +87,6 @@ dockerize-backend-arm64:
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
     - docker buildx use $DOCKER_BUILDX_NAME
     - docker buildx build --push --platform linux/arm64 -t $CI_BACKEND_IMAGE_ARM64 ./backend
-    #- docker push $CI_BACKEND_IMAGE_ARM64
   only:
     - master
 
@@ -99,7 +98,6 @@ dockerize-backend-amd64:
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
     - docker buildx use $DOCKER_BUILDX_NAME
     - docker buildx build --push --platform linux/amd64 -t $CI_BACKEND_IMAGE_AMD64 ./backend
-    #- docker push $CI_BACKEND_IMAGE_AMD64
   only:
     - master
 
@@ -112,7 +110,6 @@ dockerize-frontend-arm64:
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
     - docker buildx use $DOCKER_BUILDX_NAME
     - docker buildx build --push --platform linux/arm64 -t $CI_FRONTEND_IMAGE_ARM64 .
-    #- docker push $CI_FRONTEND_IMAGE_ARM64
   dependencies:
     - build-frontend
   only:
@@ -127,7 +124,6 @@ dockerize-frontend-amd64:
     - echo $CI_DEPLOY_TOKEN | docker login -u $CI_DEPLOY_USERNAME $CI_REGISTRY --password-stdin
     - docker buildx use $DOCKER_BUILDX_NAME
     - docker buildx build --platform linux/amd64 --push -t $CI_FRONTEND_IMAGE_AMD64 .
-    #- docker push $CI_FRONTEND_IMAGE_AMD64
   dependencies:
     - build-frontend
   only:
