@@ -168,6 +168,7 @@ dockerize-frontend-amd64:
 
 deploy-testing:
   stage: deploy
+  needs: ["dockerize-frontend-arm64", "dockerize-backend-arm64"]
   tags:
     - rpi-deploy
   script:
