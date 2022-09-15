@@ -37,9 +37,6 @@ services:
       - backend_media:/usr/src/app/media
       - backend_static:/usr/src/app/static
       - backend_logs:/usr/src/app/logs
-    networks:
-      - default
-      - traefik-network
 
   backend-nginx:
     image: nginx:1.23.1-alpine
@@ -49,6 +46,9 @@ services:
       - backend_static:/staticfiles
     depends_on:
       - backend
+    networks:
+      - default
+      - traefik-network
     labels:
       # Backend
       - "traefik.enable=true"
