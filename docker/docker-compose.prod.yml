@@ -79,7 +79,30 @@ networks:
 
 volumes:
   postgres_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/nicolamorandi/postgres
+
   backend_media:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/nicolamorandi/media
+
   backend_static:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/nicolamorandi/static
+
   backend_logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/nicolamorandi/logs
 
