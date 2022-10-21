@@ -1,0 +1,11 @@
+name: Common Verify Code Workflow
+run-name: ${{ github.actor }} run the verify workflow
+
+on:
+  push: [ master ]
+  pull-request:
+
+jobs:
+  common:
+    uses: ./.github/workflows/common.yml
+    secrets: inherit

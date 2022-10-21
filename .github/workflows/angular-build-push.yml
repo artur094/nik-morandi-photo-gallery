@@ -1,0 +1,72 @@
+name: Angular Build and Push Workflow
+run-name: ${{ github.actor }} run the build and push workflow
+
+on:
+  workflow_call:
+    inputs:
+      LABELS:
+        required: true
+        type: string
+      DOCKER_IMAGE:
+        required: true
+        type: string
+      DOCKERFILE_PATH:
+        required: true
+        type: string
+      WORKING_DIRECTORY:
+        required: true
+        type: string
+      ENVIRONMENT:
+        required: true
+        type: string
+    outputs:
+      DOCKER_IMAGE:
+        description: "The built and pushed docker image name"
+        value: ${{ jobs.angular-build-push.outputs.DOCKER_IMAGE }}
+
+jobs:
+  angular-build-push:
+    runs-on: ${{ fromJson(inputs.LABELS) }}
+    container: docker
+
+    defaults:
+      run:
+        working-directory: ${{ inputs.WORKING_DIRECTORY }}
+
+    outputs:
+      DOCKER_IMAGE: ${{ steps.meta.outputs.tags }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node ${{ inputs.NODE_VERSION }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ inputs.WORKING_DIRECTORY }}/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build for environment ${{ inputs.ENVIRONMENT }}
+        run: npm ci:build:${{ inputs.ENVIRONMENT }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}/${{ inputs.DOCKER_IMAGE }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ${{ inputs.WORKING_DIRECTORY }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

@@ -1,0 +1,44 @@
+name: Angular Verify Code Workflow
+run-name: ${{ github.actor }} run the verify workflow
+
+on:
+  workflow_call:
+    inputs:
+      LABELS:
+        required: true
+        type: string
+      DOCKER_IMAGE:
+        required: true
+        type: string
+      NODE_VERSION:
+        required: true
+        type: string
+      WORKING_DIRECTORY:
+        required: true
+        type: string
+
+jobs:
+  angular-verify:
+    runs-on: ${{ fromJson(inputs.LABELS) }}
+    container: ${{ inputs.DOCKER_IMAGE }}
+
+    defaults:
+      run:
+        working-directory: ${{ inputs.WORKING_DIRECTORY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Node ${{ inputs.NODE_VERSION }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ inputs.WORKING_DIRECTORY }}/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Check linting
+        run: npm ci:lint
+      - name: Check building
+        run: npm ci:build
+      - run: echo "🍏 This job's status is ${{ job.status }}."

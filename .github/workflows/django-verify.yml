@@ -1,0 +1,40 @@
+name: Django Verify Code Workflow
+run-name: ${{ github.actor }} run the verify workflow
+
+on:
+  workflow_call:
+    inputs:
+      LABELS:
+        required: true
+        type: string
+      DOCKER_IMAGE:
+        required: true
+        type: string
+      PYTHON_VERSION:
+        required: true
+        type: string
+      WORKING_DIRECTORY:
+        required: true
+        type: string
+
+jobs:
+  django-verify:
+    runs-on: ${{ fromJson(inputs.LABELS) }}
+    container: ${{ inputs.DOCKER_IMAGE }}
+
+    defaults:
+      run:
+        working-directory: ${{ inputs.WORKING_DIRECTORY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Python ${{ inputs.PYTHON_VERSION }}
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ inputs.PYTHON_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ inputs.WORKING_DIRECTORY }}/requirements.txt
+      - name: Check Flake8
+        run: flake8 .
+      - run: echo "🍏 This job's status is ${{ job.status }}."

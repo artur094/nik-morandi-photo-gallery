@@ -14,7 +14,11 @@
     "lint": "npx ng lint",
     "e2e": "ng e2e",
     "prettier-check": "npx prettier --check .",
-    "prettier-fix": "npx prettier --write ."
+    "prettier-fix": "npx prettier --write .",
+    "ci:lint": "npx ng lint",
+    "ci:build": "npx ionic build",
+    "ci:build:testing": "npx ionic build --configuration testing --minifyjs --minifycss --optimizejs",
+    "ci:build:production": "npx ionic build --configuration production --minifyjs --minifycss --optimizejs"
   },
   "private": true,
   "dependencies": {
