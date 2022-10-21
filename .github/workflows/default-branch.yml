@@ -4,7 +4,7 @@ run-name: ${{ github.actor }} run the verify workflow
 on:
   push:
     branches: [ master ]
-  pull-request:
+  pull_request:
     branches: [ master]
 
 jobs:
