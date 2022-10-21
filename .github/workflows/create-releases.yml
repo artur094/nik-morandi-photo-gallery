@@ -1,0 +1,10 @@
+on:
+  push: [v*.*.*]
+
+jobs:
+  angular-verify:
+    runs-on: [native, raspberry, pipeline]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
