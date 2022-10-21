@@ -1,5 +1,7 @@
 on:
-  push: [v*.*.*]
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
 
 jobs:
   angular-verify:

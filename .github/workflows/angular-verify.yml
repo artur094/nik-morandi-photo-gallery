@@ -30,7 +30,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Setup Node ${{ inputs.NODE_VERSION }}
-      - uses: actions/setup-node@v3
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.NODE_VERSION }}
           cache: 'npm'

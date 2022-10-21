@@ -2,7 +2,8 @@ name: Common Verify Code Workflow
 run-name: ${{ github.actor }} run the verify workflow
 
 on:
-  push: [ master ]
+  push:
+    branches: [ master ]
   pull-request:
 
 jobs:
