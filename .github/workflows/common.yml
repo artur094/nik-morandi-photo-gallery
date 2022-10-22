@@ -18,7 +18,7 @@ jobs:
     uses: ./.github/workflows/django-verify.yml
     with:
       LABELS: "['pipeline', 'docker', 'raspberry']"
-      DOCKER_IMAGE: python:3.10-alpine
+      DOCKER_IMAGE: python:3.8.3-buster
       PYTHON_VERSION: 3.10
       WORKING_DIRECTORY: backend
     secrets: inherit
