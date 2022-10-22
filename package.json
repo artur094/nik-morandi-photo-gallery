@@ -4,13 +4,14 @@
   "author": "Morandizzi's Family",
   "homepage": "nicolamorandi.morandizzi.freeddns.org",
   "scripts": {
-    "setup": "cd backend && pip install pre-commit && pre-commit run --all-files",
     "dev-start-docker": "docker-compose --project-name nicolamorandi -f docker/docker-compose.dev.yml up -d",
-    "generate-swagger": "curl http://localhost:8000/api/schema -L > backend-swagger.yaml && ng-openapi-gen --input backend-swagger.yaml --output frontend/src/app/core/api && rm backend-swagger.yaml"
+    "generate-swagger": "curl http://localhost:8000/api/schema -L > backend-swagger.yaml && ng-openapi-gen --input backend-swagger.yaml --output frontend/src/app/core/api && rm backend-swagger.yaml",
+    "prepare": "husky install"
   },
   "private": true,
   "description": "NicolaMorandi PhotoGallery",
   "devDependencies": {
+    "husky": "^8.0.1",
     "ng-openapi-gen": "^0.21.2"
   }
 }

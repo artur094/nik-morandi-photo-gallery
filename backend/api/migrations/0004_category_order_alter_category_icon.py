@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0003_alter_photo_photo_alter_photo_photo_low_res_and_more'),
+        ("api", "0003_alter_photo_photo_alter_photo_photo_low_res_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='category',
-            name='order',
+            model_name="category",
+            name="order",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='category',
-            name='icon',
+            model_name="category",
+            name="icon",
             field=models.CharField(blank=True, max_length=32, null=True),
         ),
     ]

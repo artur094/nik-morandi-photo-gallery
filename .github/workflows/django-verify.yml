@@ -33,4 +33,6 @@ jobs:
         run: pip install -r requirements.txt
       - name: Check Flake8
         run: flake8 .
+      - name: Check Black
+        run: black . --check
       - run: echo "🍏 This job's status is ${{ job.status }}."

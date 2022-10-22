@@ -5,13 +5,15 @@ from django.db.models import Q
 
 
 def apply_migration(apps, schema_editor):
-    Group = apps.get_model('auth', 'Group')
-    Permission = apps.get_model('auth', 'Permission')
+    Group = apps.get_model("auth", "Group")
+    Permission = apps.get_model("auth", "Permission")
     group = Group.objects.create(
-       name="Photographer",
+        name="Photographer",
     )
 
-    permissions = Permission.objects.filter(Q(codename__icontains="category") | Q(codename__icontains="photo"))
+    permissions = Permission.objects.filter(
+        Q(codename__icontains="category") | Q(codename__icontains="photo")
+    )
 
     for permission in permissions:
         group.permissions.add(permission)
@@ -19,7 +21,7 @@ def apply_migration(apps, schema_editor):
 
 
 def revert_migration(apps, schema_editor):
-    Group = apps.get_model('auth', 'Group')
+    Group = apps.get_model("auth", "Group")
     Group.objects.filter(
         name__in=[
             "Photographer",
@@ -30,9 +32,7 @@ def revert_migration(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0005_category_visible_photo_description_photo_visible'),
+        ("api", "0005_category_visible_photo_description_photo_visible"),
     ]
 
-    operations = [
-        migrations.RunPython(apply_migration, revert_migration)
-    ]
+    operations = [migrations.RunPython(apply_migration, revert_migration)]
