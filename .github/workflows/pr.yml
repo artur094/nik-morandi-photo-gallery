@@ -17,7 +17,7 @@ jobs:
   # Move all next steps to default-branch
   django-build-testing:
     uses: ./.github/workflows/angular-build-push.yml
-    inputs:
+    with:
       LABELS: "['pipeline', 'native', 'raspberry']"
       DOCKER_IMAGE: backend
       DOCKER_IMAGE_NAME: latest
@@ -27,7 +27,7 @@ jobs:
 
   angular-build-testing:
     uses: ./.github/workflows/angular-build-push.yml
-    inputs:
+    with:
       LABELS: "['pipeline', 'native', 'raspberry']"
       DOCKER_IMAGE: frontend
       DOCKER_IMAGE_NAME: latest
