@@ -1,5 +1,5 @@
 # base image
-FROM nginx:1.23.1-buster
+FROM nginx:1.23.1-alpine
 
 # expose port 80
 EXPOSE 80

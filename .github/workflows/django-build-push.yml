@@ -27,7 +27,6 @@ on:
 jobs:
   django-build-push:
     runs-on: ${{ fromJson(inputs.LABELS) }}
-    container: docker
 
     defaults:
       run:
