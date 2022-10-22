@@ -10,6 +10,9 @@ on:
       DOCKER_IMAGE:
         required: true
         type: string
+      DOCKER_IMAGE_TAG:
+        required: true
+        type: string
       DOCKERFILE_PATH:
         required: true
         type: string
@@ -42,6 +45,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ghcr.io/${{ github.repository }}/${{ inputs.DOCKER_IMAGE }}
+          tags: ${{ inputs.DOCKER_IMAGE_NAME }}
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:

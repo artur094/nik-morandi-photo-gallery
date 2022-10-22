@@ -4,8 +4,6 @@ run-name: ${{ github.actor }} run the verify workflow
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
