@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Check linting
-        run: npm ci:lint
+        run: npm run ci:lint
       - name: Check building
-        run: npm ci:build
+        run: npm run ci:build
       - run: echo "🍏 This job's status is ${{ job.status }}."
