@@ -58,4 +58,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          file: ${{ inputs.DOCKERFILE_PATH }}
+          file: ${{ inputs.WORKING_DIRECTORY }}/${{ inputs.DOCKERFILE_PATH }}
