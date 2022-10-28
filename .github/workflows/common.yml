@@ -6,7 +6,7 @@ on:
 
 jobs:
   angular-verify:
-    uses: ./.github/workflows/angular-verify.yml
+    uses: artur094/workflows/.github/workflows/angular-verify.yml
     with:
       LABELS: "['ubuntu-latest']"
       DOCKER_IMAGE: node:18.4.0-buster
@@ -15,7 +15,7 @@ jobs:
     secrets: inherit
 
   django-verify:
-    uses: ./.github/workflows/django-verify.yml
+    uses: artur094/workflows/.github/workflows/django-verify.yml
     with:
       LABELS: "['ubuntu-latest']"
       DOCKER_IMAGE: python:3.8.3-buster

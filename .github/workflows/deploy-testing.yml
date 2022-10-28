@@ -1,9 +1,11 @@
+name: Deploy Testing Workflow
+
 on:
   workflow_dispatch:
 
 jobs:
   deploy:
-    uses: ./.github/workflows/docker-deploy.yml
+    uses: artur094/workflows/.github/workflows/docker-deploy.yml
     with:
       LABELS: "['native', 'raspberry', 'deploy']"
       DOCKER_COMPOSE_FILE: docker/docker-compose.testing.yml

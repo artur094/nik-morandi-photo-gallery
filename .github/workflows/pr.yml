@@ -1,4 +1,4 @@
-name: Common Verify Code Workflow
+name: Pull Request Workflow
 run-name: ${{ github.actor }} run the verify workflow
 
 on:
@@ -12,29 +12,4 @@ concurrency:
 jobs:
   common:
     uses: ./.github/workflows/common.yml
-    secrets: inherit
-
-  # Move all next steps to default-branch
-  django-build-testing:
-    uses: ./.github/workflows/django-build-push.yml
-    with:
-      #LABELS: "['pipeline', 'native', 'raspberry']"
-      LABELS: "['ubuntu-latest']"
-      DOCKER_IMAGE: backend
-      DOCKER_IMAGE_TAG: latest
-      DOCKERFILE_PATH: Dockerfile
-      WORKING_DIRECTORY: backend
-    secrets: inherit
-
-  angular-build-testing:
-    uses: ./.github/workflows/angular-build-push.yml
-    with:
-      #LABELS: "['pipeline', 'native', 'raspberry']"
-      LABELS: "['ubuntu-latest']"
-      DOCKER_IMAGE: frontend
-      DOCKER_IMAGE_TAG: latest
-      DOCKERFILE_PATH: Dockerfile
-      WORKING_DIRECTORY: frontend
-      ENVIRONMENT: testing
-      NODE_VERSION: 18.4.0
     secrets: inherit

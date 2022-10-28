@@ -1,3 +1,5 @@
+name: Create Release Workflow
+
 on:
   push:
     tags:
