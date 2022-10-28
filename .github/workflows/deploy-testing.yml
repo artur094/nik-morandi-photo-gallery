@@ -5,6 +5,7 @@ on:
 
 jobs:
   deploy:
+    environment: testing
     uses: artur094/workflows/.github/workflows/docker-deploy.yml@main
     with:
       LABELS: "['native', 'raspberry', 'deploy']"

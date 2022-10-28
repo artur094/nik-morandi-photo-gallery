@@ -8,6 +8,7 @@ on:
         description: Tag to deploy
 jobs:
   deploy:
+    environment: production
     uses: artur094/workflows/.github/workflows/docker-deploy.yml@main
     with:
       LABELS: "['native', 'raspberry', 'deploy']"

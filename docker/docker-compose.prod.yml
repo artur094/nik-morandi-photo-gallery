@@ -83,26 +83,26 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /opt/nicolamorandi/postgres
+      device: /opt/nicolamorandi/production/postgres
 
   backend_media:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /opt/nicolamorandi/media
+      device: /opt/nicolamorandi/production/media
 
   backend_static:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /opt/nicolamorandi/static
+      device: /opt/nicolamorandi/production/static
 
   backend_logs:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /opt/nicolamorandi/logs
+      device: /opt/nicolamorandi/production/logs
 
