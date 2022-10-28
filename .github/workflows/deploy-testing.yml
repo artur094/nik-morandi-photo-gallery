@@ -5,7 +5,7 @@ on:
 
 jobs:
   deploy:
-    uses: artur094/workflows/.github/workflows/docker-deploy.yml
+    uses: artur094/workflows/.github/workflows/docker-deploy.yml@main
     with:
       LABELS: "['native', 'raspberry', 'deploy']"
       DOCKER_COMPOSE_FILE: docker/docker-compose.testing.yml

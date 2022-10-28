@@ -16,7 +16,7 @@ jobs:
     secrets: inherit
 
   django-build-testing:
-    uses: artur094/workflows/.github/workflows/django-build-push.yml
+    uses: artur094/workflows/.github/workflows/django-build-push.yml@main
     with:
       #LABELS: "['pipeline', 'native', 'raspberry']"
       LABELS: "['ubuntu-latest']"
@@ -27,7 +27,7 @@ jobs:
     secrets: inherit
 
   angular-build-testing:
-    uses: artur094/workflows/.github/workflows/angular-build-push.yml
+    uses: artur094/workflows/.github/workflows/angular-build-push.yml@main
     with:
       #LABELS: "['pipeline', 'native', 'raspberry']"
       LABELS: "['ubuntu-latest']"
