@@ -1,4 +1,4 @@
-name: Common Verify Code Workflow
+name: Main Workflow
 
 run-name: ${{ github.actor }} run the verify workflow
 
