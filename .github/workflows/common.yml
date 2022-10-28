@@ -1,0 +1,24 @@
+name: Common Verify Code Workflow
+run-name: ${{ github.actor }} run the verify workflow
+
+on:
+  workflow_call:
+
+jobs:
+  angular-verify:
+    uses: artur094/workflows/.github/workflows/angular-verify.yml@main
+    with:
+      LABELS: "['ubuntu-latest']"
+      DOCKER_IMAGE: node:18.4.0-buster
+      NODE_VERSION: 18.4.0
+      WORKING_DIRECTORY: frontend
+    secrets: inherit
+
+  django-verify:
+    uses: artur094/workflows/.github/workflows/django-verify.yml@main
+    with:
+      LABELS: "['ubuntu-latest']"
+      DOCKER_IMAGE: python:3.8.3-buster
+      PYTHON_VERSION: 3.10
+      WORKING_DIRECTORY: backend
+    secrets: inherit

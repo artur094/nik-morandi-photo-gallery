@@ -11,12 +11,12 @@ from django.db.models import Max
 
 
 def get_extension(filename):
-    return filename.split('.')[-1]
+    return filename.split(".")[-1]
 
 
 def get_image_path(instance, filename, directory):
     extension = get_extension(filename)
-    return f'images/{directory}/{str(uuid.uuid4())}.{extension}'
+    return f"images/{directory}/{str(uuid.uuid4())}.{extension}"
 
 
 def get_full_res_image_path(instance, filename):
@@ -51,7 +51,7 @@ class Category(models.Model):
         verbose_name_plural = "Categorie"
 
     def save(self, *args, **kwargs):
-        current_max_order = Category.objects.aggregate(Max('order'))['order__max']
+        current_max_order = Category.objects.aggregate(Max("order"))["order__max"]
 
         if self.order is None:
             self.order = current_max_order + 1 if current_max_order is not None else 1
@@ -86,12 +86,14 @@ class Photo(AuditModel, models.Model):
         tmp_resized = ImageOps.fit(tmp_image, size)
         tmp_resized.save(output_io_stream, format=tmp_image.format, quality=quality)
         output_io_stream.seek(0)
-        compressed_image = InMemoryUploadedFile(output_io_stream,
-                                                'ImageField',
-                                                f"image.{get_extension(full_res_photo.name)}",
-                                                mimetypes.guess_type(full_res_photo.name)[0],
-                                                sys.getsizeof(output_io_stream),
-                                                None)
+        compressed_image = InMemoryUploadedFile(
+            output_io_stream,
+            "ImageField",
+            f"image.{get_extension(full_res_photo.name)}",
+            mimetypes.guess_type(full_res_photo.name)[0],
+            sys.getsizeof(output_io_stream),
+            None,
+        )
         return compressed_image
 
     def __str__(self):

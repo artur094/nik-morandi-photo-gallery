@@ -1,0 +1,40 @@
+name: Common Verify Code Workflow
+
+run-name: ${{ github.actor }} run the verify workflow
+
+on:
+  push:
+    branches: [ master ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  common:
+    uses: ./.github/workflows/common.yml
+    secrets: inherit
+
+  django-build-testing:
+    uses: artur094/workflows/.github/workflows/django-build-push.yml@main
+    with:
+      #LABELS: "['pipeline', 'native', 'raspberry']"
+      LABELS: "['ubuntu-latest']"
+      DOCKER_IMAGE: backend
+      DOCKER_IMAGE_TAG: latest
+      DOCKERFILE_PATH: Dockerfile
+      WORKING_DIRECTORY: backend
+    secrets: inherit
+
+  angular-build-testing:
+    uses: artur094/workflows/.github/workflows/angular-build-push.yml@main
+    with:
+      #LABELS: "['pipeline', 'native', 'raspberry']"
+      LABELS: "['ubuntu-latest']"
+      DOCKER_IMAGE: frontend
+      DOCKER_IMAGE_TAG: latest
+      DOCKERFILE_PATH: Dockerfile
+      WORKING_DIRECTORY: frontend
+      ENVIRONMENT: testing
+      NODE_VERSION: 18.4.0
+    secrets: inherit

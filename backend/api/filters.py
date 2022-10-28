@@ -3,7 +3,6 @@ from django_filters import rest_framework as filters
 
 
 class PhotoFilter(filters.FilterSet):
-
     class Meta:
         model = Photo
         fields = {

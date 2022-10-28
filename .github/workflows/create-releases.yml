@@ -1,0 +1,35 @@
+name: Create Release Workflow
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+
+jobs:
+  common:
+    uses: ./.github/workflows/common.yml
+    secrets: inherit
+
+  django-build-production:
+    uses: artur094/workflows/.github/workflows/django-build-push.yml@main
+    with:
+      #LABELS: "['pipeline', 'native', 'raspberry']"
+      LABELS: "['ubuntu-latest']"
+      DOCKER_IMAGE: backend
+      DOCKER_IMAGE_TAG: ${{ github.ref }}
+      DOCKERFILE_PATH: Dockerfile
+      WORKING_DIRECTORY: backend
+    secrets: inherit
+
+  angular-build-production:
+    uses: artur094/workflows/.github/workflows/angular-build-push.yml@main
+    with:
+      #LABELS: "['pipeline', 'native', 'raspberry']"
+      LABELS: "['ubuntu-latest']"
+      DOCKER_IMAGE: frontend
+      DOCKER_IMAGE_TAG: ${{ github.ref }}
+      DOCKERFILE_PATH: Dockerfile
+      WORKING_DIRECTORY: frontend
+      ENVIRONMENT: testing
+      NODE_VERSION: 18.4.0
+    secrets: inherit

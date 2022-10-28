@@ -19,5 +19,5 @@ class PhotoSerializer(serializers.ModelSerializer):
             "thumbnail",
             "category",
             "description",
-            "created_at"
+            "created_at",
         ]

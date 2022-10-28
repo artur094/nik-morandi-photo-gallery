@@ -7,23 +7,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0002_category_icon'),
+        ("api", "0002_category_icon"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='photo',
-            name='photo',
+            model_name="photo",
+            name="photo",
             field=models.ImageField(upload_to=api.models.get_full_res_image_path),
         ),
         migrations.AlterField(
-            model_name='photo',
-            name='photo_low_res',
+            model_name="photo",
+            name="photo_low_res",
             field=models.ImageField(upload_to=api.models.get_low_res_image_path),
         ),
         migrations.AlterField(
-            model_name='photo',
-            name='thumbnail',
+            model_name="photo",
+            name="thumbnail",
             field=models.ImageField(upload_to=api.models.get_thumbnail_image_path),
         ),
     ]

@@ -1,0 +1,15 @@
+name: Pull Request Workflow
+run-name: ${{ github.actor }} run the verify workflow
+
+on:
+  pull_request:
+    branches: [master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  common:
+    uses: ./.github/workflows/common.yml
+    secrets: inherit

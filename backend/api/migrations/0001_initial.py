@@ -15,31 +15,59 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
             ],
             options={
-                'verbose_name': 'Categoria',
-                'verbose_name_plural': 'Categorie',
+                "verbose_name": "Categoria",
+                "verbose_name_plural": "Categorie",
             },
         ),
         migrations.CreateModel(
-            name='Photo',
+            name="Photo",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('modified_at', models.DateTimeField(auto_now=True)),
-                ('photo', models.ImageField(upload_to='')),
-                ('photo_low_res', models.ImageField(upload_to='')),
-                ('thumbnail', models.ImageField(upload_to='')),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='api.category')),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("modified_at", models.DateTimeField(auto_now=True)),
+                ("photo", models.ImageField(upload_to="")),
+                ("photo_low_res", models.ImageField(upload_to="")),
+                ("thumbnail", models.ImageField(upload_to="")),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to="api.category",
+                    ),
+                ),
+                (
+                    "created_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Foto',
-                'verbose_name_plural': 'Foto',
+                "verbose_name": "Foto",
+                "verbose_name_plural": "Foto",
             },
         ),
     ]

@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0004_category_order_alter_category_icon'),
+        ("api", "0004_category_order_alter_category_icon"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='category',
-            name='visible',
+            model_name="category",
+            name="visible",
             field=models.BooleanField(default=True),
         ),
         migrations.AddField(
-            model_name='photo',
-            name='description',
+            model_name="photo",
+            name="description",
             field=models.CharField(blank=True, max_length=2048, null=True),
         ),
         migrations.AddField(
-            model_name='photo',
-            name='visible',
+            model_name="photo",
+            name="visible",
             field=models.BooleanField(default=True),
         ),
     ]
