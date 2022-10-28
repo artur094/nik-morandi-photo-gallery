@@ -3,7 +3,7 @@ on:
 
 jobs:
   angular-verify:
-    runs-on: [native, raspberry, pipeline]
+    runs-on: [native, raspberry, deploy]
 
     steps:
       - name: Checkout code

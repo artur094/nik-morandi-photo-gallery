@@ -14,9 +14,10 @@ on:
         required: true
         type: string
 
+env: "${{secrets}}"
 
 jobs:
-  angular-verify:
+  docker-deploy:
     runs-on: ${{ fromJson(inputs.LABELS) }}
 
     steps:
