@@ -8,12 +8,12 @@ on:
         description: Tag to deploy
 jobs:
   deploy:
-    environment: production
     uses: artur094/workflows/.github/workflows/docker-deploy.yml@main
     with:
       LABELS: "['native', 'raspberry', 'deploy']"
       DOCKER_COMPOSE_FILE: docker/docker-compose.testing.yml
       PROJECT_NAME: nik-morandi-photo-gallery
+      ENVIRONMENT: production
       IMAGE_NAMES: "{
         'FRONTEND_IMAGE': 'ghcr.io/${{ github.repository}}/frontend:${{ github.event.inputs.TAG }}',
         'BACKEND_IMAGE': 'ghcr.io/${{ github.repository}}/backend:${{ github.event.inputs.TAG }}'
