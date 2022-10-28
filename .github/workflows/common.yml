@@ -8,7 +8,7 @@ jobs:
   angular-verify:
     uses: ./.github/workflows/angular-verify.yml
     with:
-      LABELS: "['pipeline', 'docker', 'raspberry']"
+      LABELS: "['ubuntu-latest']"
       DOCKER_IMAGE: node:18.4.0-buster
       NODE_VERSION: 18.4.0
       WORKING_DIRECTORY: frontend
@@ -17,7 +17,7 @@ jobs:
   django-verify:
     uses: ./.github/workflows/django-verify.yml
     with:
-      LABELS: "['pipeline', 'docker', 'raspberry']"
+      LABELS: "['ubuntu-latest']"
       DOCKER_IMAGE: python:3.8.3-buster
       PYTHON_VERSION: 3.10
       WORKING_DIRECTORY: backend
