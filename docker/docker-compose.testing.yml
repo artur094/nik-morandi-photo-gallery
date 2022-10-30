@@ -10,15 +10,15 @@ services:
       # Frontend
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      - "traefik.http.routers.nicolamorandi.rule=Host(`nicolamorandi.morandizzi.freeddns.org`)"
-      - "traefik.http.routers.nicolamorandi.entrypoints=websecure"
-      - "traefik.http.routers.nicolamorandi.tls=true"
-      - "traefik.http.routers.nicolamorandi.service=nicolamorandi"
-      - "traefik.http.services.nicolamorandi.loadbalancer.server.port=80"
-      - "traefik.http.routers.nicolamorandi.tls.certresolver=le"
-      - "traefik.http.routers.nicolamorandi.tls.domains[0].main=nicolamorandi.morandizzi.freeddns.org"
+      - "traefik.http.routers.nicolamorandi-testing.rule=Host(`nicolamorandi.morandizzi.freeddns.org`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`)  || PathPrefix(`/media`))"
+      - "traefik.http.routers.nicolamorandi-testing.entrypoints=websecure"
+      - "traefik.http.routers.nicolamorandi-testing.tls=true"
+      - "traefik.http.routers.nicolamorandi-testing.service=nicolamorandi-testing"
+      - "traefik.http.services.nicolamorandi-testing.loadbalancer.server.port=80"
+      - "traefik.http.routers.nicolamorandi-testing.tls.certresolver=le"
+      - "traefik.http.routers.nicolamorandi-testing.tls.domains[0].main=nicolamorandi.morandizzi.freeddns.org"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.nicolamorandi.middlewares=redirect-to-https@docker"
+      - "traefik.http.routers.nicolamorandi-testing.middlewares=redirect-to-https@docker"
 
   backend:
     image: ${BACKEND_IMAGE}
@@ -53,15 +53,15 @@ services:
       # Backend
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      - "traefik.http.routers.nicolamorandi-backend.rule=Host(`nicolamorandi-backend.morandizzi.freeddns.org`)"
-      - "traefik.http.routers.nicolamorandi-backend.entrypoints=websecure"
-      - "traefik.http.routers.nicolamorandi-backend.tls=true"
-      - "traefik.http.routers.nicolamorandi-backend.service=nicolamorandi-backend"
-      - "traefik.http.services.nicolamorandi-backend.loadbalancer.server.port=80"
-      - "traefik.http.routers.nicolamorandi-backend.tls.certresolver=le"
-      - "traefik.http.routers.nicolamorandi-backend.tls.domains[0].main=nicolamorandi-backend.morandizzi.freeddns.org"
+      - "traefik.http.routers.nicolamorandi-testing-backend.rule=Host(`nicolamorandi-backend.morandizzi.freeddns.org`)"
+      - "traefik.http.routers.nicolamorandi-testing-backend.entrypoints=websecure"
+      - "traefik.http.routers.nicolamorandi-testing-backend.tls=true"
+      - "traefik.http.routers.nicolamorandi-testing-backend.service=nicolamorandi-testing-backend"
+      - "traefik.http.services.nicolamorandi-testing-backend.loadbalancer.server.port=80"
+      - "traefik.http.routers.nicolamorandi-testing-backend.tls.certresolver=le"
+      - "traefik.http.routers.nicolamorandi-testing-backend.tls.domains[0].main=nicolamorandi-backend.morandizzi.freeddns.org"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.nicolamorandi-backend.middlewares=redirect-to-https@docker"
+      - "traefik.http.routers.nicolamorandi-testing-backend.middlewares=redirect-to-https@docker"
 
   db:
     image: postgres

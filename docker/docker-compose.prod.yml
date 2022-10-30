@@ -10,15 +10,15 @@ services:
       # Frontend
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      - "traefik.http.routers.nicolamorandi.rule=Host(`nicolamorandi.morandizzi.com`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`)  || PathPrefix(`/media`))"
-      - "traefik.http.routers.nicolamorandi.entrypoints=websecure"
-      - "traefik.http.routers.nicolamorandi.tls=true"
-      - "traefik.http.routers.nicolamorandi.service=nicolamorandi"
-      - "traefik.http.services.nicolamorandi.loadbalancer.server.port=80"
-      - "traefik.http.routers.nicolamorandi.tls.certresolver=le"
-      - "traefik.http.routers.nicolamorandi.tls.domains[0].main=nicolamorandi.morandizzi.com"
+      - "traefik.http.routers.nicolamorandi-production.rule=Host(`nicolamorandi.morandizzi.com`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`)  || PathPrefix(`/media`))"
+      - "traefik.http.routers.nicolamorandi-production.entrypoints=websecure"
+      - "traefik.http.routers.nicolamorandi-production.tls=true"
+      - "traefik.http.routers.nicolamorandi-production.service=nicolamorandi-production"
+      - "traefik.http.services.nicolamorandi-production.loadbalancer.server.port=80"
+      - "traefik.http.routers.nicolamorandi-production.tls.certresolver=le"
+      - "traefik.http.routers.nicolamorandi-production.tls.domains[0].main=nicolamorandi.morandizzi.com"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.nicolamorandi.middlewares=redirect-to-https@docker"
+      - "traefik.http.routers.nicolamorandi-production.middlewares=redirect-to-https@docker"
 
   backend:
     image: ${BACKEND_IMAGE}
@@ -53,15 +53,15 @@ services:
       # Backend
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      - "traefik.http.routers.nicolamorandi-backend.rule=Host(`nicolamorandi.morandizzi.com`)"
-      - "traefik.http.routers.nicolamorandi-backend.entrypoints=websecure"
-      - "traefik.http.routers.nicolamorandi-backend.tls=true"
-      - "traefik.http.routers.nicolamorandi-backend.service=nicolamorandi-backend"
-      - "traefik.http.services.nicolamorandi-backend.loadbalancer.server.port=80"
-      - "traefik.http.routers.nicolamorandi-backend.tls.certresolver=le"
-      - "traefik.http.routers.nicolamorandi-backend.tls.domains[0].main=nicolamorandi.morandizzi.com"
+      - "traefik.http.routers.nicolamorandi-production-backend.rule=Host(`nicolamorandi.morandizzi.com`)"
+      - "traefik.http.routers.nicolamorandi-production-backend.entrypoints=websecure"
+      - "traefik.http.routers.nicolamorandi-production-backend.tls=true"
+      - "traefik.http.routers.nicolamorandi-production-backend.service=nicolamorandi-production-backend"
+      - "traefik.http.services.nicolamorandi-production-backend.loadbalancer.server.port=80"
+      - "traefik.http.routers.nicolamorandi-production-backend.tls.certresolver=le"
+      - "traefik.http.routers.nicolamorandi-production-backend.tls.domains[0].main=nicolamorandi.morandizzi.com"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.nicolamorandi-backend.middlewares=redirect-to-https@docker"
+      - "traefik.http.routers.nicolamorandi-production-backend.middlewares=redirect-to-https@docker"
 
   db:
     image: postgres
