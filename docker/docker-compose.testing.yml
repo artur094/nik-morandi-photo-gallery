@@ -10,13 +10,13 @@ services:
       # Frontend
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      - "traefik.http.routers.nicolamorandi-testing.rule=Host(`nicolamorandi.morandizzi.freeddns.org`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`)  || PathPrefix(`/media`))"
+      - "traefik.http.routers.nicolamorandi-testing.rule=Host(`nicolamorandi.testing.morandizzi.com`)"
       - "traefik.http.routers.nicolamorandi-testing.entrypoints=websecure"
       - "traefik.http.routers.nicolamorandi-testing.tls=true"
       - "traefik.http.routers.nicolamorandi-testing.service=nicolamorandi-testing"
       - "traefik.http.services.nicolamorandi-testing.loadbalancer.server.port=80"
       - "traefik.http.routers.nicolamorandi-testing.tls.certresolver=le"
-      - "traefik.http.routers.nicolamorandi-testing.tls.domains[0].main=nicolamorandi.morandizzi.freeddns.org"
+      - "traefik.http.routers.nicolamorandi-testing.tls.domains[0].main=nicolamorandi.testing.morandizzi.com"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.routers.nicolamorandi-testing.middlewares=redirect-to-https@docker"
 
@@ -24,9 +24,9 @@ services:
     image: ${BACKEND_IMAGE}
     restart: unless-stopped
     environment:
-      - CORS_ALLOWED_ORIGINS=https://nicolamorandi.morandizzi.freeddns.org
-      - CSRF_TRUSTED_ORIGINS=https://nicolamorandi-backend.morandizzi.freeddns.org
-      - HOST=nicolamorandi-backend.morandizzi.freeddns.org
+      - CORS_ALLOWED_ORIGINS=https://nicolamorandi.testing.morandizzi.com
+      - CSRF_TRUSTED_ORIGINS=https://nicolamorandi.testing.morandizzi.com
+      - HOST=nicolamorandi-backend.morandizzi.com
       - DATABASE_URL=psql://nicolamorandi:${DATABASE_PASSWORD}@db/nicolamorandi
       - SECRET_KEY=${DJANGO_SECRET_KEY}
       - DEBUG=False
@@ -53,13 +53,13 @@ services:
       # Backend
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      - "traefik.http.routers.nicolamorandi-testing-backend.rule=Host(`nicolamorandi-backend.morandizzi.freeddns.org`)"
+      - "traefik.http.routers.nicolamorandi-testing-backend.rule=Host(`nicolamorandi.testing.morandizzi.com`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`)  || PathPrefix(`/media`))"
       - "traefik.http.routers.nicolamorandi-testing-backend.entrypoints=websecure"
       - "traefik.http.routers.nicolamorandi-testing-backend.tls=true"
       - "traefik.http.routers.nicolamorandi-testing-backend.service=nicolamorandi-testing-backend"
       - "traefik.http.services.nicolamorandi-testing-backend.loadbalancer.server.port=80"
       - "traefik.http.routers.nicolamorandi-testing-backend.tls.certresolver=le"
-      - "traefik.http.routers.nicolamorandi-testing-backend.tls.domains[0].main=nicolamorandi-backend.morandizzi.freeddns.org"
+      - "traefik.http.routers.nicolamorandi-testing-backend.tls.domains[0].main=nicolamorandi.testing.morandizzi.com"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.routers.nicolamorandi-testing-backend.middlewares=redirect-to-https@docker"
 

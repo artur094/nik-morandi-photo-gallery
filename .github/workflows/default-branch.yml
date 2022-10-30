@@ -1,6 +1,6 @@
 name: Main Workflow
 
-run-name: ${{ github.actor }} run the verify workflow
+run-name: ${{ github.actor }} run the main workflow
 
 on:
   push:

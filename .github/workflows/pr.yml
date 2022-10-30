@@ -1,5 +1,6 @@
 name: Pull Request Workflow
-run-name: ${{ github.actor }} run the verify workflow
+
+run-name: ${{ github.actor }} run the PR workflow
 
 on:
   pull_request:

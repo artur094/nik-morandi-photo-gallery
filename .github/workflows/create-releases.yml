@@ -1,5 +1,7 @@
 name: Create Release Workflow
 
+run-name: ${{ github.actor }} run the create release workflow
+
 on:
   push:
     tags:
