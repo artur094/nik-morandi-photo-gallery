@@ -12,6 +12,9 @@ RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
+# create the app user
+RUN addgroup -S www-data && adduser -S www-data -G www-data
+
 # create the appropriate directories
 ENV APP_HOME=/usr/src/app
 RUN mkdir $APP_HOME
@@ -22,9 +25,10 @@ WORKDIR $APP_HOME
 # copy project
 COPY . $APP_HOME
 
+# chown all the files to the app user
 RUN chmod +x $APP_HOME/entrypoint.sh
 
 # change to the app user
-USER app
+USER www-data
 
 ENTRYPOINT [ "./entrypoint.sh" ]
