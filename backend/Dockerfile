@@ -25,7 +25,4 @@ COPY . $APP_HOME
 # chown all the files to the app user
 RUN chmod +x $APP_HOME/entrypoint.sh
 
-# change to the app user
-USER www-data
-
 ENTRYPOINT [ "./entrypoint.sh" ]
