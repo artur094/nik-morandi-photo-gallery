@@ -12,9 +12,6 @@ RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-# create the app user
-RUN addgroup -S app && adduser -S app -G app
-
 # create the appropriate directories
 ENV APP_HOME=/usr/src/app
 RUN mkdir $APP_HOME
