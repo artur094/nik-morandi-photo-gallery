@@ -12,6 +12,9 @@ RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
+# create the app user
+RUN addgroup -S app && adduser -S app -G app
+
 # create the appropriate directories
 ENV APP_HOME=/usr/src/app
 RUN mkdir $APP_HOME
@@ -24,5 +27,8 @@ COPY . $APP_HOME
 
 # chown all the files to the app user
 RUN chmod +x $APP_HOME/entrypoint.sh
+
+# change to the app user
+USER app
 
 ENTRYPOINT [ "./entrypoint.sh" ]
