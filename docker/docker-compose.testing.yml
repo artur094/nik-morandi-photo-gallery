@@ -29,7 +29,7 @@ services:
       - HOST=nicolamorandi.testing.morandizzi.com
       - DATABASE_URL=psql://nicolamorandi:${DATABASE_PASSWORD}@db/nicolamorandi
       - SECRET_KEY=${DJANGO_SECRET_KEY}
-      - DEBUG=True
+      - DEBUG=False
     command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --workers 5 --timeout 120
     depends_on:
       - db
