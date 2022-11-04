@@ -22,10 +22,6 @@ WORKDIR $APP_HOME
 # copy project
 COPY . $APP_HOME
 
-# chown all the files to the app user
-RUN chown -R app:app $APP_HOME
-RUN chown -R app:app $APP_HOME/static
-RUN chown -R app:app $APP_HOME/media
 RUN chmod +x $APP_HOME/entrypoint.sh
 
 # change to the app user
