@@ -13,7 +13,7 @@ jobs:
     uses: artur094/workflows/.github/workflows/docker-deploy.yml@main
     with:
       LABELS: "['native', 'contabo', 'deploy']"
-      DOCKER_COMPOSE_FILE: docker/docker-compose.testing.yml
+      DOCKER_COMPOSE_FILE: docker/docker-compose.prod.yml
       PROJECT_NAME: nik-morandi-photo-gallery
       ENVIRONMENT: production
       IMAGE_NAMES: "{
