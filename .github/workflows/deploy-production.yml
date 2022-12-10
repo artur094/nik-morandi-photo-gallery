@@ -14,7 +14,7 @@ jobs:
     with:
       LABELS: "['native', 'contabo', 'deploy']"
       DOCKER_COMPOSE_FILE: docker/docker-compose.prod.yml
-      PROJECT_NAME: nik-morandi-photo-gallery
+      PROJECT_NAME: nik-morandi-photo-gallery-production
       ENVIRONMENT: production
       IMAGE_NAMES: "{
         'FRONTEND_IMAGE': 'ghcr.io/${{ github.repository}}/frontend:latest',

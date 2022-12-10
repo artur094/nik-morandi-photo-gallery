@@ -47,7 +47,7 @@ jobs:
     with:
       LABELS: "['native', 'raspberry', 'deploy']"
       DOCKER_COMPOSE_FILE: docker/docker-compose.testing.yml
-      PROJECT_NAME: nik-morandi-photo-gallery
+      PROJECT_NAME: nik-morandi-photo-gallery-production
       ENVIRONMENT: testing
       IMAGE_NAMES: "{
         'FRONTEND_IMAGE': 'ghcr.io/${{ github.repository}}/frontend:latest',
