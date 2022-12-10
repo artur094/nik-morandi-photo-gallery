@@ -1,8 +1,7 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
-  "dataGroups":
-  [
+  "dataGroups": [
     {
       "name": "backend",
       "urls": ["/api", "/admin", "/static", "/media"],

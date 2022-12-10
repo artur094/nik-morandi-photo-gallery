@@ -36,11 +36,9 @@
               </a>
             </div>
           </ion-note>
-          <ion-menu-toggle
-            auto-hide="false"
-            *ngFor="let p of pages$ | async; let i = index"
-          >
+          <ion-menu-toggle auto-hide="false">
             <ion-item
+              *ngFor="let p of pages$ | async; let i = index"
               routerDirection="root"
               [routerLink]="[p.url]"
               lines="none"
@@ -53,6 +51,20 @@
                 [md]="p.icon + '-sharp'"
               ></ion-icon>
               <ion-label>{{ p.title | titlecase }}</ion-label>
+            </ion-item>
+            <ion-item
+              routerDirection="root"
+              lines="none"
+              detail="false"
+              [routerLink]="[]"
+              (click)="goToLogin()"
+            >
+              <ion-icon
+                slot="start"
+                ios="log-in-outline"
+                md="log-in-sharp"
+              ></ion-icon>
+              <ion-label>Login</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

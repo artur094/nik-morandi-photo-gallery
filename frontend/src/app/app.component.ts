@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CategoriesService } from './core/api/services/categories.service';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { UpdatePwaService } from './core/services/update-pwa.service';
+import { environment } from '../environments/environment';
 
 interface MenuItem {
   title: string;
@@ -15,7 +16,9 @@ interface MenuItem {
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  homePage = {
+  readonly environment = environment;
+
+  readonly homePage = {
     title: 'home',
     url: '/gallery/all',
     icon: 'home',
@@ -37,5 +40,10 @@ export class AppComponent {
     private updatePwaService: UpdatePwaService
   ) {
     this.updatePwaService.checkForUpdates();
+  }
+
+  goToLogin(): void {
+    window.location = (environment.rootUrl + '/admin') as (string | Location) &
+      Location;
   }
 }
