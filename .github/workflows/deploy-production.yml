@@ -17,7 +17,7 @@ jobs:
       PROJECT_NAME: nik-morandi-photo-gallery-production
       ENVIRONMENT: production
       IMAGE_NAMES: "{
-        'FRONTEND_IMAGE': 'ghcr.io/${{ github.repository}}/frontend:latest',
-        'BACKEND_IMAGE': 'ghcr.io/${{ github.repository}}/backend:latest'
+        'FRONTEND_IMAGE': 'ghcr.io/${{ github.repository }}/frontend:${{ github.event.inputs.TAG }}',
+        'BACKEND_IMAGE': 'ghcr.io/${{ github.repository }}/backend:${{ github.event.inputs.TAG }}'
       }"
     secrets: inherit
