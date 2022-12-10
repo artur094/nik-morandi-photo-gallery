@@ -18,7 +18,7 @@ jobs:
       #LABELS: "['pipeline', 'native', 'raspberry']"
       LABELS: "['ubuntu-latest']"
       DOCKER_IMAGE: backend
-      DOCKER_IMAGE_TAG: ${{GITHUB_REF##*/}}
+      DOCKER_IMAGE_TAG: ${{ github.ref_name }}
       DOCKERFILE_PATH: Dockerfile
       WORKING_DIRECTORY: backend
     secrets: inherit
@@ -29,7 +29,7 @@ jobs:
       #LABELS: "['pipeline', 'native', 'raspberry']"
       LABELS: "['ubuntu-latest']"
       DOCKER_IMAGE: frontend
-      DOCKER_IMAGE_TAG:${{GITHUB_REF##*/}}
+      DOCKER_IMAGE_TAG: ${{ github.ref_name }}
       DOCKERFILE_PATH: Dockerfile
       WORKING_DIRECTORY: frontend
       ENVIRONMENT: testing
