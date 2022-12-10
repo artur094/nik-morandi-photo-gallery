@@ -67,7 +67,7 @@ services:
     image: postgres
     restart: unless-stopped
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: nicolamorandi
       POSTGRES_USER: nicolamorandi
@@ -78,7 +78,7 @@ networks:
     external: true
 
 volumes:
-  postgres_data: {}
-  backend_media: {}
-  backend_static: {}
-  backend_logs: {}
+  postgres_data:
+  backend_media:
+  backend_static:
+  backend_logs:
