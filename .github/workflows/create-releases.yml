@@ -13,6 +13,7 @@ jobs:
     secrets: inherit
 
   django-build-production:
+    needs: [common]
     uses: artur094/workflows/.github/workflows/django-build-push.yml@main
     with:
       #LABELS: "['pipeline', 'native', 'raspberry']"
@@ -24,6 +25,7 @@ jobs:
     secrets: inherit
 
   angular-build-production:
+    needs: [common]
     uses: artur094/workflows/.github/workflows/angular-build-push.yml@main
     with:
       #LABELS: "['pipeline', 'native', 'raspberry']"
@@ -34,4 +36,17 @@ jobs:
       WORKING_DIRECTORY: frontend
       ENVIRONMENT: production
       NODE_VERSION: 18.4.0
+    secrets: inherit
+
+  deploy:
+    uses: artur094/workflows/.github/workflows/docker-deploy.yml@main
+    with:
+      LABELS: "['native', 'contabo', 'deploy']"
+      DOCKER_COMPOSE_FILE: docker/docker-compose.prod.yml
+      PROJECT_NAME: nik-morandi-photo-gallery-production
+      ENVIRONMENT: production
+      IMAGE_NAMES: "{
+        'FRONTEND_IMAGE': 'ghcr.io/${{ github.repository }}/frontend:${{ github.ref_name }}',
+        'BACKEND_IMAGE': 'ghcr.io/${{ github.repository }}/backend:${{ github.ref_name }}'
+      }"
     secrets: inherit
