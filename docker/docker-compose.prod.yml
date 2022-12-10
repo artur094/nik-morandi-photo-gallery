@@ -10,7 +10,7 @@ services:
       # Frontend
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      - "traefik.http.routers.nicolamorandi-frontend-production.rule=Host(`nicolamorandi.morandizzi.com`)"
+      - "traefik.http.routers.nicolamorandi-frontend-production.rule=Host(`nicolamorandi.morandizzi.com`) && !(PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`)  || PathPrefix(`/media`))"
       - "traefik.http.routers.nicolamorandi-frontend-production.entrypoints=websecure"
       - "traefik.http.routers.nicolamorandi-frontend-production.tls=true"
       - "traefik.http.routers.nicolamorandi-frontend-production.service=nicolamorandi-frontend-production"
