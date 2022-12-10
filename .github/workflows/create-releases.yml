@@ -32,6 +32,6 @@ jobs:
       DOCKER_IMAGE_TAG: ${{ github.ref_name }}
       DOCKERFILE_PATH: Dockerfile
       WORKING_DIRECTORY: frontend
-      ENVIRONMENT: testing
+      ENVIRONMENT: production
       NODE_VERSION: 18.4.0
     secrets: inherit
