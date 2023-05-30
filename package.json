@@ -4,7 +4,7 @@
   "author": "Morandizzi's Family",
   "homepage": "nicolamorandi.morandizzi.com",
   "scripts": {
-    "dev-start-docker": "docker-compose --project-name nicolamorandi -f docker/docker-compose.dev.yml up -d",
+    "dev:docker:start": "docker-compose --project-name nicolamorandi -f docker/docker-compose.dev.yml up -d",
     "generate-swagger": "curl http://localhost:8000/api/schema -L > backend-swagger.yaml && ng-openapi-gen --input backend-swagger.yaml --output frontend/src/app/core/api && rm backend-swagger.yaml",
     "prepare": "husky install"
   },
