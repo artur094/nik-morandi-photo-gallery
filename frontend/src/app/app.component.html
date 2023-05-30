@@ -45,11 +45,7 @@
               detail="false"
               routerLinkActive="selected"
             >
-              <ion-icon
-                slot="start"
-                [ios]="p.icon + '-outline'"
-                [md]="p.icon + '-sharp'"
-              ></ion-icon>
+              <app-icon [icon]="p.icon" class="ion-margin-end"></app-icon>
               <ion-label>{{ p.title | titlecase }}</ion-label>
             </ion-item>
             <ion-item
@@ -59,11 +55,7 @@
               [routerLink]="[]"
               (click)="goToLogin()"
             >
-              <ion-icon
-                slot="start"
-                ios="log-in-outline"
-                md="log-in-sharp"
-              ></ion-icon>
+              <app-icon icon="login" class="ion-margin-end"></app-icon>
               <ion-label>Login</ion-label>
             </ion-item>
           </ion-menu-toggle>
