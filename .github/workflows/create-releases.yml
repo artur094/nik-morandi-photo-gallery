@@ -39,6 +39,7 @@ jobs:
     secrets: inherit
 
   deploy:
+    needs: [django-build-production, angular-build-production]
     uses: artur094/workflows/.github/workflows/docker-deploy.yml@main
     with:
       LABELS: "['native', 'contabo', 'deploy']"
