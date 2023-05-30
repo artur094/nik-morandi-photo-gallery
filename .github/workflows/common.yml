@@ -9,8 +9,8 @@ jobs:
     uses: artur094/workflows/.github/workflows/angular-verify.yml@main
     with:
       LABELS: "['ubuntu-latest']"
-      DOCKER_IMAGE: node:18.4.0-buster
-      NODE_VERSION: 18.4.0
+      DOCKER_IMAGE: node:16.17.0-buster
+      NODE_VERSION: 16.17.0
       WORKING_DIRECTORY: frontend
     secrets: inherit
 

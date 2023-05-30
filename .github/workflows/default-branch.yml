@@ -38,7 +38,7 @@ jobs:
       DOCKERFILE_PATH: Dockerfile
       WORKING_DIRECTORY: frontend
       ENVIRONMENT: testing
-      NODE_VERSION: 18.4.0
+      NODE_VERSION: 16.17.0
     secrets: inherit
 
   deploy:
