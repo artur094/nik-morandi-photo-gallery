@@ -10,13 +10,13 @@ services:
       # Frontend
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      - "traefik.http.routers.nicolamorandi-frontend-production.rule=Host(`nicolamorandi.morandizzi.com`)"
+      - "traefik.http.routers.nicolamorandi-frontend-production.rule=Host(`nicolamorandi.morandizzi.eu`)"
       - "traefik.http.routers.nicolamorandi-frontend-production.entrypoints=websecure"
       - "traefik.http.routers.nicolamorandi-frontend-production.tls=true"
       - "traefik.http.routers.nicolamorandi-frontend-production.service=nicolamorandi-frontend-production"
       - "traefik.http.services.nicolamorandi-frontend-production.loadbalancer.server.port=80"
       - "traefik.http.routers.nicolamorandi-frontend-production.tls.certresolver=le"
-      - "traefik.http.routers.nicolamorandi-frontend-production.tls.domains[0].main=nicolamorandi.morandizzi.com"
+      - "traefik.http.routers.nicolamorandi-frontend-production.tls.domains[0].main=nicolamorandi.morandizzi.eu"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.routers.nicolamorandi-frontend-production.middlewares=redirect-to-https@docker"
 
@@ -24,8 +24,8 @@ services:
     image: ${BACKEND_IMAGE}
     restart: unless-stopped
     environment:
-      - CORS_ALLOWED_ORIGINS=https://nicolamorandi.morandizzi.com
-      - CSRF_TRUSTED_ORIGINS=https://nicolamorandi.morandizzi.com
+      - CORS_ALLOWED_ORIGINS=https://nicolamorandi.morandizzi.eu
+      - CSRF_TRUSTED_ORIGINS=https://nicolamorandi.morandizzi.eu
       - HOST=nicolamorandi.morandizzi.com
       - DATABASE_URL=psql://nicolamorandi:${DATABASE_PASSWORD}@db/nicolamorandi
       - SECRET_KEY=${DJANGO_SECRET_KEY}
@@ -53,13 +53,13 @@ services:
       # Backend
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      - "traefik.http.routers.nicolamorandi-backend-production.rule=Host(`nicolamorandi.morandizzi.com`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`)  || PathPrefix(`/media`))"
+      - "traefik.http.routers.nicolamorandi-backend-production.rule=Host(`nicolamorandi.morandizzi.eu`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`)  || PathPrefix(`/media`))"
       - "traefik.http.routers.nicolamorandi-backend-production.entrypoints=websecure"
       - "traefik.http.routers.nicolamorandi-backend-production.tls=true"
       - "traefik.http.routers.nicolamorandi-backend-production.service=nicolamorandi-backend-production"
       - "traefik.http.services.nicolamorandi-backend-production.loadbalancer.server.port=80"
       - "traefik.http.routers.nicolamorandi-backend-production.tls.certresolver=le"
-      - "traefik.http.routers.nicolamorandi-backend-production.tls.domains[0].main=nicolamorandi.morandizzi.com"
+      - "traefik.http.routers.nicolamorandi-backend-production.tls.domains[0].main=nicolamorandi.morandizzi.eu"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.routers.nicolamorandi-backend-production.middlewares=redirect-to-https@docker"
 
