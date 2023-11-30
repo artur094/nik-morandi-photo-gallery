@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  rootUrl: 'https://nicolamorandi.morandizzi.com',
+  rootUrl: 'https://nicolamorandi.morandizzi.eu',
 };
